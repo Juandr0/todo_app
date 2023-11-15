@@ -65,7 +65,6 @@ class _PostItViewState extends State<PostItView> {
     super.dispose();
   }
 
-  // TODO: Add logic that removes image upon click. Task currently blocked
   Stack _imageStack() {
     return Stack(
       children: [
