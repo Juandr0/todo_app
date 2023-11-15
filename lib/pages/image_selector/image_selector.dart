@@ -3,14 +3,23 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ImageSelector extends StatefulWidget {
-  const ImageSelector({Key? key}) : super(key: key);
+  const ImageSelector({super.key});
 
   @override
-  State<ImageSelector> createState() => _ImageSelectorState();
+  State<ImageSelector> createState() {
+    return _ImageSelectorState();
+  }
 }
 
 class _ImageSelectorState extends State<ImageSelector> {
   File? imageFile;
+
+  static const double containerWidth = 640;
+  static const double containerHeight = 480;
+  static const double borderWidth = 8;
+  static const double borderRadius = 12;
+  static const double fontSize = 18;
+  static const double textFontSize = 26;
 
   @override
   Widget build(BuildContext context) {
@@ -28,73 +37,89 @@ class _ImageSelectorState extends State<ImageSelector> {
 
   Column imageCap() {
     return Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          if (imageFile != null)
-            Container(
-              width: 640,
-              height: 480,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                color: Colors.grey,
-                image: DecorationImage(
-                    image: FileImage(imageFile!), fit: BoxFit.cover),
-                border: Border.all(width: 8, color: Colors.black),
-                borderRadius: BorderRadius.circular(12.0),
-              ),
-            )
-          else
-            Container(
-              width: 640,
-              height: 480,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                color: Colors.grey,
-                border: Border.all(width: 8, color: Colors.black12),
-                borderRadius: BorderRadius.circular(12.0),
-              ),
-              child: const Text(
-                'Capture Image or Gallery?',
-                style: TextStyle(fontSize: 26),
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        if (imageFile != null)
+          buildImageContainer(
+            image: FileImage(imageFile!),
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: FileImage(imageFile!),
+                fit: BoxFit.cover,
               ),
             ),
-          const SizedBox(
-            height: 20,
+          )
+        else
+          buildImageContainer(
+            text: 'Capture Image or Gallery?',
+            decoration: BoxDecoration(
+              border: Border.all(width: borderWidth, color: Colors.black12),
+            ),
           ),
-          buttonRow(),
-        ],
-      );
+        const SizedBox(
+          height: 20,
+        ),
+        buttonRow(),
+      ],
+    );
+  }
+
+  Widget buildImageContainer({
+    ImageProvider? image,
+    BoxDecoration? decoration,
+    String? text,
+  }) {
+    return Container(
+      width: containerWidth,
+      height: containerHeight,
+      alignment: Alignment.center,
+      decoration: decoration ?? buildDefaultDecoration(),
+      child: text != null
+          ? Text(
+              text,
+              style: TextStyle(fontSize: textFontSize),
+            )
+          : null,
+    );
+  }
+
+  BoxDecoration buildDefaultDecoration() {
+    return BoxDecoration(
+      color: Colors.grey,
+      border: Border.all(width: borderWidth, color: Colors.black),
+      borderRadius: BorderRadius.circular(borderRadius),
+    );
   }
 
   Row buttonRow() {
     return Row(
-            children: [
-              Expanded(
-                child: ElevatedButton(
-                    onPressed: () => getImage(source: ImageSource.camera),
-                    child: const Text('Capture Image',
-                        style: TextStyle(fontSize: 18))),
-              ),
-              const SizedBox(
-                width: 20,
-              ),
-              Expanded(
-                child: ElevatedButton(
-                    onPressed: () => getImage(source: ImageSource.gallery),
-                    child: const Text('Select Image',
-                        style: TextStyle(fontSize: 18))),
-              )
-            ],
-          );
+      children: [
+        Expanded(
+          child: ElevatedButton(
+            onPressed: () => getImage(source: ImageSource.camera),
+            child: const Text('Capture Image', style: TextStyle(fontSize: fontSize)),
+          ),
+        ),
+        const SizedBox(
+          width: 20,
+        ),
+        Expanded(
+          child: ElevatedButton(
+            onPressed: () => getImage(source: ImageSource.gallery),
+            child: const Text('Select Image', style: TextStyle(fontSize: fontSize)),
+          ),
+        ),
+      ],
+    );
   }
 
   void getImage({required ImageSource source}) async {
     final file = await ImagePicker().pickImage(
-        source: source,
-        maxWidth: 640,
-        maxHeight: 480,
-        imageQuality: 70 //0 - 100
-        );
+      source: source,
+      maxWidth: containerWidth,
+      maxHeight: containerHeight,
+      imageQuality: 70, // 0 - 100
+    );
 
     if (file?.path != null) {
       setState(() {
@@ -103,3 +128,4 @@ class _ImageSelectorState extends State<ImageSelector> {
     }
   }
 }
+
