@@ -14,8 +14,8 @@ class PostItView extends StatefulWidget {
 
 class _PostItViewState extends State<PostItView> {
   Size containerSize = const Size(350, 350);
-  int titleCharacters = 25;
-  int descriptionCharacters = 25;
+  int titleMaxCharacters = 25;
+  int descriptionMaxCharacters = 25;
 
   @override
   Widget build(BuildContext context) {
@@ -31,9 +31,9 @@ class _PostItViewState extends State<PostItView> {
           padding: const EdgeInsets.all(AppSizes.between),
           child: Column(
             children: [
-              centerTextField('Title', false, titleCharacters),
+              centerTextField('Title', false, titleMaxCharacters),
               const SizedBox(height: AppSizes.between),
-              centerTextField('Description', true, descriptionCharacters),
+              centerTextField('Description', true, descriptionMaxCharacters),
               widget.todoImage == null ? iconButtons() : scalableImage()
             ],
           ),
