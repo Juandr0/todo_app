@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo_app/constants/app_sizes.dart';
 
 class PostItView extends StatefulWidget {
   const PostItView({this.title, this.description, this.todoImage, super.key});
@@ -13,6 +14,8 @@ class PostItView extends StatefulWidget {
 
 class _PostItViewState extends State<PostItView> {
   Size containerSize = const Size(350, 350);
+  int titleCharacters = 25;
+  int descriptionCharacters = 25;
 
   @override
   Widget build(BuildContext context) {
@@ -20,19 +23,17 @@ class _PostItViewState extends State<PostItView> {
       height: containerSize.height,
       width: containerSize.width,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(5),
+        borderRadius: BorderRadius.circular(AppSizes.inline),
         color: Colors.yellow,
       ),
       child: Center(
         child: Padding(
-          padding: const EdgeInsets.all(20.0),
+          padding: const EdgeInsets.all(AppSizes.between),
           child: Column(
             children: [
-              centerTextField('Title', false, 25),
-              const SizedBox(
-                height: 20,
-              ),
-              centerTextField('Description', true, 75),
+              centerTextField('Title', false, titleCharacters),
+              const SizedBox(height: AppSizes.between),
+              centerTextField('Description', true, descriptionCharacters),
               widget.todoImage == null ? iconButtons() : scalableImage()
             ],
           ),
@@ -73,8 +74,10 @@ class _PostItViewState extends State<PostItView> {
     bool multipleLines,
     int maxCharacters,
   ) {
+    int defaultAmount = 1;
+
     return TextField(
-      maxLines: multipleLines ? null : 1,
+      maxLines: multipleLines ? null : defaultAmount,
       maxLength: maxCharacters,
       textAlign: TextAlign.center,
       decoration: InputDecoration(
