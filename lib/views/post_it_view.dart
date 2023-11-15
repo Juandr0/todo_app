@@ -15,7 +15,7 @@ class PostItView extends StatefulWidget {
 class _PostItViewState extends State<PostItView> {
   Size containerSize = const Size(350, 350);
   int titleMaxCharacters = 25;
-  int descriptionMaxCharacters = 25;
+  int descriptionMaxCharacters = 75;
 
   @override
   Widget build(BuildContext context) {
