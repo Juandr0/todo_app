@@ -1,3 +1,6 @@
+
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:todo_app/constants/colors.dart';
 import 'package:todo_app/widgets/alert_builder.dart';
@@ -41,7 +44,7 @@ class ToDoItem extends StatelessWidget {
               iconSize: 16,
               icon: const Icon(Icons.delete),
               onPressed: () {
-                print('Clicked on delete icon');
+                log('Clicked on delete icon');
               },
             )),
       ),

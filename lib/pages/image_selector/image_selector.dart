@@ -20,6 +20,8 @@ class _ImageSelectorState extends State<ImageSelector> {
   static const double borderRadius = 12;
   static const double fontSize = 18;
   static const double textFontSize = 26;
+  static const double sizeBoxHeight = 20;
+  static const double imageQuality = 70;
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +59,7 @@ class _ImageSelectorState extends State<ImageSelector> {
             ),
           ),
         const SizedBox(
-          height: 20,
+          height: sizeBoxHeight,
         ),
         buttonRow(),
       ],
@@ -77,7 +79,7 @@ class _ImageSelectorState extends State<ImageSelector> {
       child: text != null
           ? Text(
               text,
-              style: TextStyle(fontSize: textFontSize),
+              style: const TextStyle(fontSize: textFontSize),
             )
           : null,
     );
@@ -118,7 +120,7 @@ class _ImageSelectorState extends State<ImageSelector> {
       source: source,
       maxWidth: containerWidth,
       maxHeight: containerHeight,
-      imageQuality: 70, // 0 - 100
+      imageQuality: imageQuality.toInt(), // 0 - 100
     );
 
     if (file?.path != null) {
