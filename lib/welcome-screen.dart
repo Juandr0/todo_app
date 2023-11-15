@@ -10,53 +10,49 @@ class WelcomeScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Welcome!!!'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            const Expanded(
-              flex: 2,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Welcome to the Todo App!',
-                    style: TextStyle(
-                      fontSize: 32,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                  SizedBox(height: 20),
-                  Text(
-                    'This is how you use the Todo-App. Start organizing your tasks and get things done!',
-                    style: TextStyle(fontSize: 18),
-                    textAlign: TextAlign.center,
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () async {
-                await SharedPrefHelper.setFirstTime();
-                // Add route to Todo screen
-              },
-              child: const Padding(
-                padding: EdgeInsets.symmetric(vertical: 16.0),
-                child: Text(
-                  'Get Started',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            child: Column(
+              children: <Widget>[
+                const Text(
+                  'Welcome to the Todo-App!',
+                  style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.center,
                 ),
-              ),
+                const SizedBox(height: 20),
+                FutureBuilder<bool>(
+                  future: SharedPrefHelper.isFirstTime(),
+                  builder:
+                      (BuildContext context, AsyncSnapshot<bool> snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const CircularProgressIndicator();
+                    } else {
+                      bool isFirstTime = snapshot.data ?? true;
+                      return Text(
+                        //For testing- shows the shared pref seen value
+                        'Seen Value: $isFirstTime',
+                        style: const TextStyle(fontSize: 18),
+                        textAlign: TextAlign.center,
+                      );
+                    }
+                  },
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+          const SizedBox(height: 40),
+          ElevatedButton(
+            onPressed: () async {
+              await SharedPrefHelper.setFirstTime();
+              // Navigate to the Todo screen
+            },
+            child: const Text('Get Started'),
+          ),
+        ],
       ),
     );
   }
