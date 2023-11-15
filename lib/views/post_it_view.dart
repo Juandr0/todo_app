@@ -2,11 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:todo_app/constants/app_sizes.dart';
 
 class PostItView extends StatefulWidget {
-  const PostItView({this.title, this.description, this.todoImage, super.key});
+  PostItView(
+      {this.title,
+      this.description,
+      this.todoImage,
+      super.key,
+      required this.backgroundColor});
 
   final String? title;
   final Image? todoImage;
   final String? description;
+  Color backgroundColor;
 
   @override
   State<StatefulWidget> createState() => _PostItViewState();
@@ -24,17 +30,18 @@ class _PostItViewState extends State<PostItView> {
       width: containerSize.width,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(AppSizes.inline),
-        color: Colors.yellow,
+        color: widget.backgroundColor,
       ),
       child: Center(
         child: Padding(
           padding: const EdgeInsets.all(AppSizes.between),
           child: Column(
             children: [
-              centerTextField('Title', false, titleMaxCharacters),
+              _centerTextField('Title', false, titleMaxCharacters),
               const SizedBox(height: AppSizes.between),
-              centerTextField('Description', true, descriptionMaxCharacters),
-              widget.todoImage == null ? iconButtons() : scalableImage()
+              _centerTextField('Description', true, descriptionMaxCharacters),
+              const SizedBox(height: AppSizes.within),
+              widget.todoImage == null ? _iconButtons() : _imageStack()
             ],
           ),
         ),
@@ -42,8 +49,29 @@ class _PostItViewState extends State<PostItView> {
     );
   }
 
-  // Currently holds a placeholder image.
-  Expanded scalableImage() {
+  // TODO: Add logic that removes image upon click. Task currently blocked
+  Stack _imageStack() {
+    return Stack(
+      children: [
+        _scalableImage(),
+        Align(
+          alignment: Alignment.topRight,
+          child: IconButton(
+            alignment: Alignment.topRight,
+            onPressed: () {},
+            padding: EdgeInsets.zero,
+            icon: const Icon(
+              Icons.cancel,
+              color: Colors.red,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  // TODO: Replace placeholder image with real image. Task currently blocked
+  Expanded _scalableImage() {
     return Expanded(
       child: Image.network(
         width: double.infinity,
@@ -53,8 +81,9 @@ class _PostItViewState extends State<PostItView> {
     );
   }
 
-  Row iconButtons() {
+  Row _iconButtons() {
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         IconButton(
@@ -69,7 +98,7 @@ class _PostItViewState extends State<PostItView> {
     );
   }
 
-  TextField centerTextField(
+  TextField _centerTextField(
     String title,
     bool multipleLines,
     int maxCharacters,

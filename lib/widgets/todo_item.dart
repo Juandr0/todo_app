@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/constants/colors.dart';
+import 'package:todo_app/widgets/alert_builder.dart';
 
 class ToDoItem extends StatelessWidget {
   const ToDoItem({Key? key}) : super(key: key);
@@ -10,7 +11,7 @@ class ToDoItem extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 20),
       child: ListTile(
         onTap: () {
-          print('Clicked on item');
+          AlertBuilder.buildPostIt(context);
         },
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
