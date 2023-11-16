@@ -9,15 +9,17 @@ class AlertBuilder {
       builder: (BuildContext context) => AlertDialog(
         backgroundColor: Colors.transparent,
         shadowColor: Colors.transparent,
-        content: PostItView(
-          todoItem: Todo(
-              Image.network(
-                width: double.infinity,
-                fit: BoxFit.fitWidth,
-                'https://media-cldnry.s-nbcnews.com/image/upload/newscms/2021_07/2233721/171120-smile-stock-njs-333p.jpg',
-              ),
-              'descriptionjanne',
-              title: 'Titeljanne'),
+        content: SingleChildScrollView(
+          child: PostItView(
+            todoItem: Todo(
+                Image.network(
+                  width: double.infinity,
+                  fit: BoxFit.fitWidth,
+                  'https://media-cldnry.s-nbcnews.com/image/upload/newscms/2021_07/2233721/171120-smile-stock-njs-333p.jpg',
+                ),
+                'descriptionjanne',
+                title: 'Titeljanne'),
+          ),
         ),
         actions: <Widget>[
           Row(

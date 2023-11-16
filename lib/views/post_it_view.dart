@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/constants/app_sizes.dart';
 import 'package:todo_app/models/to_do.dart';
+import 'package:todo_app/widgets/color_picker.dart';
 
 class PostItView extends StatefulWidget {
   const PostItView({required this.todoItem, super.key});
@@ -12,9 +13,9 @@ class PostItView extends StatefulWidget {
 }
 
 class _PostItViewState extends State<PostItView> {
-  Size containerSize = const Size(350, 350);
   int titleMaxCharacters = 25;
-  int descriptionMaxCharacters = 75;
+  int descriptionMaxCharacters = 70;
+  Color backgroundColor = const Color.fromARGB(255, 255, 255, 0);
 
   final titleController = TextEditingController();
   final descriptionController = TextEditingController();
@@ -24,35 +25,38 @@ class _PostItViewState extends State<PostItView> {
     titleController.text = widget.todoItem.title;
     descriptionController.text = widget.todoItem.description ?? "";
 
-    return Container(
-      height: containerSize.height,
-      width: containerSize.width,
-      decoration: BoxDecoration(
+    var todoFields = [
+      _centerTextField(
+        'Title',
+        false,
+        titleMaxCharacters,
+        titleController,
+      ),
+      const SizedBox(height: AppSizes.between),
+      _centerTextField(
+        'Description',
+        true,
+        descriptionMaxCharacters,
+        descriptionController,
+      ),
+      const SizedBox(height: AppSizes.within),
+      widget.todoItem.image == null ? _iconButtons() : _imageStack(),
+    ];
+    return Card(
+      color: backgroundColor,
+      shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(AppSizes.inline),
-        color: Colors.yellow,
       ),
       child: Center(
         child: Padding(
           padding: const EdgeInsets.all(AppSizes.between),
-          child: Column(
-            children: [
-              _centerTextField(
-                'Title',
-                false,
-                titleMaxCharacters,
-                titleController,
-              ),
-              const SizedBox(height: AppSizes.between),
-              _centerTextField(
-                'Description',
-                true,
-                descriptionMaxCharacters,
-                descriptionController,
-              ),
-              const SizedBox(height: AppSizes.within),
-              widget.todoItem.image == null ? _iconButtons() : _imageStack()
-            ],
-          ),
+          child: Column(mainAxisSize: MainAxisSize.min, children: [
+            Column(children: todoFields),
+            Padding(
+              padding: const EdgeInsets.only(top: AppSizes.within),
+              child: ColorPicker(changeBackground: changeBackgroundColor),
+            )
+          ]),
         ),
       ),
     );
@@ -63,6 +67,12 @@ class _PostItViewState extends State<PostItView> {
     titleController.dispose();
     descriptionController.dispose();
     super.dispose();
+  }
+
+  void changeBackgroundColor(Color newColor) {
+    setState(() {
+      backgroundColor = newColor;
+    });
   }
 
   Stack _imageStack() {
@@ -92,7 +102,6 @@ class _PostItViewState extends State<PostItView> {
   SizedBox _scalableImage() {
     return SizedBox(
       child: Image.network(
-        width: double.infinity,
         fit: BoxFit.fitWidth,
         'https://media-cldnry.s-nbcnews.com/image/upload/newscms/2021_07/2233721/171120-smile-stock-njs-333p.jpg',
       ),
