@@ -22,7 +22,7 @@ class ColorPicker extends StatelessWidget {
     return Container(
       decoration:
           const BoxDecoration(color: Color.fromARGB(188, 136, 136, 136)),
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(AppSizes.within),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: List.generate(
