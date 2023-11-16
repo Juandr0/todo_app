@@ -55,7 +55,14 @@ class _PostItViewState extends State<PostItView> {
             Padding(
               padding: const EdgeInsets.only(top: AppSizes.within),
               child: ColorPicker(changeBackground: changeBackgroundColor),
-            )
+            ),
+            Row(
+              children: [
+                _textButton('Cancel'),
+                const Spacer(),
+                _textButton('OK'),
+              ],
+            ),
           ]),
         ),
       ),
@@ -73,6 +80,19 @@ class _PostItViewState extends State<PostItView> {
     setState(() {
       backgroundColor = newColor;
     });
+  }
+
+  TextButton _textButton(String text) {
+    return TextButton(
+      onPressed: () => {
+        if (text == 'OK')
+          {
+            // Save instance of Todo item.
+          },
+        Navigator.pop(context, text),
+      },
+      child: Text(text),
+    );
   }
 
   Stack _imageStack() {
