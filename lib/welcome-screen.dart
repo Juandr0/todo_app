@@ -14,6 +14,78 @@ class WelcomeScreen extends StatelessWidget {
 
   WelcomeScreen({super.key});
 
+  Widget buildTitleSection() {
+    return Expanded(
+      flex: 2,
+      child: Padding(
+        padding: EdgeInsets.all(paddingValue),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              'Welcome to Your Todo App!',
+              style: TextStyle(
+                fontSize: titleFontSize,
+                fontWeight: FontWeight.bold,
+                color: textColor,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            SizedBox(height: verticalSpacing),
+            Text(
+              'Organize your tasks efficiently',
+              style: TextStyle(fontSize: subtitleFontSize, color: textColor),
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget buildButtonSection(BuildContext context) {
+    return Expanded(
+      flex: 1,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          ElevatedButton(
+            onPressed: () async {
+              await SharedPrefHelper.setFirstTime();
+              // Navigate to the Todo screen
+            },
+            style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all<Color>(buttonColor),
+              shape: MaterialStateProperty.all<OutlinedBorder>(
+                RoundedRectangleBorder(
+                  borderRadius: buttonBorderRadius,
+                ),
+              ),
+            ),
+            child: Padding(
+              padding:
+                  const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
+              child: Text(
+                'Get Started',
+                style: TextStyle(fontSize: buttonFontSize),
+              ),
+            ),
+          ),
+          SizedBox(height: verticalSpacing),
+          TextButton(
+            onPressed: () {
+              // Navigate to more information or tutorial screen
+            },
+            child: Text(
+              'Learn More',
+              style: TextStyle(fontSize: buttonFontSize, color: buttonColor),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,74 +96,8 @@ class WelcomeScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          Expanded(
-            flex: 2,
-            child: Padding(
-              padding: EdgeInsets.all(paddingValue),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    'Welcome to Your Todo App!',
-                    style: TextStyle(
-                        fontSize: titleFontSize,
-                        fontWeight: FontWeight.bold,
-                        color: textColor),
-                    textAlign: TextAlign.center,
-                  ),
-                  SizedBox(height: verticalSpacing),
-                  Text(
-                    'Organize your tasks efficiently',
-                    style:
-                        TextStyle(fontSize: subtitleFontSize, color: textColor),
-                    textAlign: TextAlign.center,
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Expanded(
-            flex: 1,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                ElevatedButton(
-                  onPressed: () async {
-                    await SharedPrefHelper.setFirstTime();
-                    // Navigate to the Todo screen
-                  },
-                  child: Padding(
-                    padding:
-                        EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
-                    child: Text(
-                      'Get Started',
-                      style: TextStyle(fontSize: buttonFontSize),
-                    ),
-                  ),
-                  style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.all<Color>(buttonColor),
-                    shape: MaterialStateProperty.all<OutlinedBorder>(
-                      RoundedRectangleBorder(
-                        borderRadius: buttonBorderRadius,
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(height: verticalSpacing),
-                TextButton(
-                  onPressed: () {
-                    // Navigate to more information or tutorial screen
-                  },
-                  child: Text(
-                    'Learn More',
-                    style:
-                        TextStyle(fontSize: buttonFontSize, color: buttonColor),
-                  ),
-                ),
-              ],
-            ),
-          ),
+          buildTitleSection(),
+          buildButtonSection(context),
         ],
       ),
     );
