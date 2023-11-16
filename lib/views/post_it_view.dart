@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/constants/app_sizes.dart';
+import 'package:todo_app/models/to_do.dart';
 
 class PostItView extends StatefulWidget {
-  const PostItView({this.title, this.description, this.todoImage, super.key});
+  const PostItView({required this.todoItem, super.key});
 
-  final String? title;
-  final Image? todoImage;
-  final String? description;
+  final Todo todoItem;
 
   @override
   State<StatefulWidget> createState() => _PostItViewState();
@@ -17,8 +16,14 @@ class _PostItViewState extends State<PostItView> {
   int titleMaxCharacters = 25;
   int descriptionMaxCharacters = 75;
 
+  final titleController = TextEditingController();
+  final descriptionController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
+    titleController.text = widget.todoItem.title;
+    descriptionController.text = widget.todoItem.description ?? "";
+
     return Container(
       height: containerSize.height,
       width: containerSize.width,
@@ -31,10 +36,21 @@ class _PostItViewState extends State<PostItView> {
           padding: const EdgeInsets.all(AppSizes.between),
           child: Column(
             children: [
-              centerTextField('Title', false, titleMaxCharacters),
+              _centerTextField(
+                'Title',
+                false,
+                titleMaxCharacters,
+                titleController,
+              ),
               const SizedBox(height: AppSizes.between),
-              centerTextField('Description', true, descriptionMaxCharacters),
-              widget.todoImage == null ? iconButtons() : scalableImage()
+              _centerTextField(
+                'Description',
+                true,
+                descriptionMaxCharacters,
+                descriptionController,
+              ),
+              const SizedBox(height: AppSizes.within),
+              widget.todoItem.image == null ? _iconButtons() : _imageStack()
             ],
           ),
         ),
@@ -42,9 +58,39 @@ class _PostItViewState extends State<PostItView> {
     );
   }
 
-  // Currently holds a placeholder image.
-  Expanded scalableImage() {
-    return Expanded(
+  @override
+  void dispose() {
+    titleController.dispose();
+    descriptionController.dispose();
+    super.dispose();
+  }
+
+  Stack _imageStack() {
+    return Stack(
+      children: [
+        _scalableImage(),
+        Align(
+          alignment: Alignment.topRight,
+          child: IconButton(
+            alignment: Alignment.topRight,
+            onPressed: () {
+              setState(() {
+                widget.todoItem.image = null;
+              });
+            },
+            padding: EdgeInsets.zero,
+            icon: const Icon(
+              Icons.cancel_outlined,
+              color: Colors.red,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  SizedBox _scalableImage() {
+    return SizedBox(
       child: Image.network(
         width: double.infinity,
         fit: BoxFit.fitWidth,
@@ -53,8 +99,9 @@ class _PostItViewState extends State<PostItView> {
     );
   }
 
-  Row iconButtons() {
+  Row _iconButtons() {
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         IconButton(
@@ -69,14 +116,16 @@ class _PostItViewState extends State<PostItView> {
     );
   }
 
-  TextField centerTextField(
+  TextField _centerTextField(
     String title,
     bool multipleLines,
     int maxCharacters,
+    textFieldController,
   ) {
     int defaultAmount = 1;
 
     return TextField(
+      controller: textFieldController,
       maxLines: multipleLines ? null : defaultAmount,
       maxLength: maxCharacters,
       textAlign: TextAlign.center,
