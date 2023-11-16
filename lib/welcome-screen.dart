@@ -2,7 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:todo_app/shared-preferences.dart';
 
 class WelcomeScreen extends StatelessWidget {
-  const WelcomeScreen({super.key});
+  final Color buttonColor = Colors.blue;
+  final Color textColor = Colors.black;
+  final double titleFontSize = 36;
+  final double subtitleFontSize = 18;
+  final double buttonFontSize = 16;
+  final double paddingValue = 20.0;
+  final double verticalSpacing = 20.0;
+  final double buttonSpacing = 40.0;
+  final BorderRadius buttonBorderRadius = BorderRadius.circular(8.0);
+
+  WelcomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -14,43 +24,73 @@ class WelcomeScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          Expanded(
+            flex: 2,
+            child: Padding(
+              padding: EdgeInsets.all(paddingValue),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    'Welcome to Your Todo App!',
+                    style: TextStyle(
+                        fontSize: titleFontSize,
+                        fontWeight: FontWeight.bold,
+                        color: textColor),
+                    textAlign: TextAlign.center,
+                  ),
+                  SizedBox(height: verticalSpacing),
+                  Text(
+                    'Organize your tasks efficiently',
+                    style:
+                        TextStyle(fontSize: subtitleFontSize, color: textColor),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Expanded(
+            flex: 1,
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                const Text(
-                  'Welcome to the Todo-App!',
-                  style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 20),
-                FutureBuilder<bool>(
-                  future: SharedPrefHelper.isFirstTime(),
-                  builder:
-                      (BuildContext context, AsyncSnapshot<bool> snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const CircularProgressIndicator();
-                    } else {
-                      bool isFirstTime = snapshot.data ?? true;
-                      return Text(
-                        //For testing- shows the shared pref seen value
-                        'Seen Value: $isFirstTime',
-                        style: const TextStyle(fontSize: 18),
-                        textAlign: TextAlign.center,
-                      );
-                    }
+                ElevatedButton(
+                  onPressed: () async {
+                    await SharedPrefHelper.setFirstTime();
+                    // Navigate to the Todo screen
                   },
+                  child: Padding(
+                    padding:
+                        EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
+                    child: Text(
+                      'Get Started',
+                      style: TextStyle(fontSize: buttonFontSize),
+                    ),
+                  ),
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all<Color>(buttonColor),
+                    shape: MaterialStateProperty.all<OutlinedBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: buttonBorderRadius,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(height: verticalSpacing),
+                TextButton(
+                  onPressed: () {
+                    // Navigate to more information or tutorial screen
+                  },
+                  child: Text(
+                    'Learn More',
+                    style:
+                        TextStyle(fontSize: buttonFontSize, color: buttonColor),
+                  ),
                 ),
               ],
             ),
-          ),
-          const SizedBox(height: 40),
-          ElevatedButton(
-            onPressed: () async {
-              await SharedPrefHelper.setFirstTime();
-              // Navigate to the Todo screen
-            },
-            child: const Text('Get Started'),
           ),
         ],
       ),
