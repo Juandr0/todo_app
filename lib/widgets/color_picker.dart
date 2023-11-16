@@ -20,8 +20,9 @@ class ColorPicker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration:
-          const BoxDecoration(color: Color.fromARGB(188, 136, 136, 136)),
+      decoration: const BoxDecoration(
+        color: Color.fromARGB(188, 136, 136, 136),
+      ),
       padding: const EdgeInsets.all(AppSizes.within),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
