@@ -74,9 +74,8 @@ class _PostItViewState extends State<PostItView> {
           child: IconButton(
             alignment: Alignment.topRight,
             onPressed: () {
-              widget.todoItem.image = null;
               setState(() {
-                widget.todoItem.image == null;
+                widget.todoItem.image = null;
               });
             },
             padding: EdgeInsets.zero,
