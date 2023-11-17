@@ -43,23 +43,24 @@ class _PostItViewState extends State<PostItView> {
       const SizedBox(height: AppSizes.within),
       widget.todoItem.image == null ? _iconButton() : _imageStack(),
     ];
-    return Card(
-      color: backgroundColor,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(AppSizes.inline),
-      ),
-      child: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(AppSizes.between),
-          child: Column(mainAxisSize: MainAxisSize.min, children: [
-            Column(children: todoFields),
-            Padding(
-              padding: const EdgeInsets.only(top: AppSizes.within),
-              child: ColorPicker(changeBackground: changeBackgroundColor),
+    return Column(
+      children: [
+        Card(
+          color: backgroundColor,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(AppSizes.inline),
+          ),
+          child: Center(
+            child: Padding(
+              padding: const EdgeInsets.all(AppSizes.between),
+              child: Column(mainAxisSize: MainAxisSize.min, children: [
+                Column(children: todoFields),
+              ]),
             ),
-          ]),
+          ),
         ),
-      ),
+        ColorPicker(null, changeBackground: changeBackgroundColor),
+      ],
     );
   }
 
