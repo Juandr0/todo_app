@@ -41,13 +41,10 @@ class ColorPicker extends StatelessWidget {
       onTap: () {
         changeBackground(color);
       },
-      child: Padding(
-        padding: const EdgeInsets.all(AppSizes.divider),
-        child: Container(
-          width: AppSizes.between,
-          height: AppSizes.between,
-          decoration: BoxDecoration(color: color),
-        ),
+      child: Container(
+        width: AppSizes.between,
+        height: AppSizes.between,
+        decoration: BoxDecoration(color: color),
       ),
     );
   }
