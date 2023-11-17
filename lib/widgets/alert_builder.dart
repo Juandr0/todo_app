@@ -7,18 +7,22 @@ class AlertBuilder {
     showDialog<String>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
+        contentPadding: EdgeInsets.zero,
         backgroundColor: Colors.transparent,
         shadowColor: Colors.transparent,
         content: SingleChildScrollView(
-          child: PostItView(
-            todoItem: Todo(
-                Image.network(
-                  width: double.infinity,
-                  fit: BoxFit.fitWidth,
-                  'https://media-cldnry.s-nbcnews.com/image/upload/newscms/2021_07/2233721/171120-smile-stock-njs-333p.jpg',
-                ),
-                'descriptionjanne',
-                title: 'Titeljanne'),
+          child: SizedBox(
+            width: MediaQuery.of(context).size.width,
+            child: PostItView(
+              todoItem: Todo(
+                  Image.network(
+                    width: double.infinity,
+                    fit: BoxFit.fitWidth,
+                    'https://media-cldnry.s-nbcnews.com/image/upload/newscms/2021_07/2233721/171120-smile-stock-njs-333p.jpg',
+                  ),
+                  'descriptionJanne',
+                  title: 'TitelJanne'),
+            ),
           ),
         ),
       ),

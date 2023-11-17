@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:todo_app/constants/app_sizes.dart';
 import 'package:todo_app/models/to_do.dart';
 import 'package:todo_app/widgets/color_picker.dart';
+import 'package:dotted_border/dotted_border.dart';
 
 class PostItView extends StatefulWidget {
   const PostItView({required this.todoItem, super.key});
@@ -40,7 +41,7 @@ class _PostItViewState extends State<PostItView> {
         descriptionController,
       ),
       const SizedBox(height: AppSizes.within),
-      widget.todoItem.image == null ? _iconButtons() : _imageStack(),
+      widget.todoItem.image == null ? _iconButton() : _imageStack(),
     ];
     return Card(
       color: backgroundColor,
@@ -55,13 +56,6 @@ class _PostItViewState extends State<PostItView> {
             Padding(
               padding: const EdgeInsets.only(top: AppSizes.within),
               child: ColorPicker(changeBackground: changeBackgroundColor),
-            ),
-            Row(
-              children: [
-                _textButton('Cancel'),
-                const Spacer(),
-                _textButton('OK'),
-              ],
             ),
           ]),
         ),
@@ -128,20 +122,22 @@ class _PostItViewState extends State<PostItView> {
     );
   }
 
-  Row _iconButtons() {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: [
-        IconButton(
+  DottedBorder _iconButton() {
+    return DottedBorder(
+      child: SizedBox(
+        width: double.infinity,
+        child: TextButton.icon(
           onPressed: () {},
-          icon: const Icon(Icons.camera_alt),
+          icon: const Icon(
+            Icons.camera_alt,
+            color: Colors.black,
+          ),
+          label: const Text(
+            'Add image',
+            style: TextStyle(color: Colors.black),
+          ),
         ),
-        IconButton(
-          onPressed: () {},
-          icon: const Icon(Icons.image_outlined),
-        )
-      ],
+      ),
     );
   }
 
