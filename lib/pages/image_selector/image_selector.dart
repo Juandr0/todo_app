@@ -22,6 +22,7 @@ class _ImageSelectorState extends State<ImageSelector> {
   static const double textFontSize = 26;
   static const double sizeBoxHeight = 20;
   static const double imageQuality = 70;
+  static const double edgeInsetPadding = 12.0;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +32,7 @@ class _ImageSelectorState extends State<ImageSelector> {
         centerTitle: true,
       ),
       body: Padding(
-        padding: const EdgeInsets.all(12.0),
+        padding: const EdgeInsets.all(edgeInsetPadding),
         child: imageCap(),
       ),
     );
