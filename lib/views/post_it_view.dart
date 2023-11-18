@@ -93,7 +93,7 @@ class _PostItViewState extends State<PostItView> {
   Stack _imageStack() {
     return Stack(
       children: [
-        _scalableImage(),
+        _scalableImage(widget.todoItem.image!),
         Align(
           alignment: Alignment.topRight,
           child: IconButton(
@@ -114,7 +114,7 @@ class _PostItViewState extends State<PostItView> {
     );
   }
 
-  SizedBox _scalableImage() {
+  SizedBox _scalableImage(Image image) {
     return SizedBox(
       child: Image.network(
         fit: BoxFit.fitWidth,

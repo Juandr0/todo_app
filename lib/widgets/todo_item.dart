@@ -1,12 +1,14 @@
-
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:todo_app/constants/colors.dart';
 import 'package:todo_app/widgets/alert_builder.dart';
+import '../models/to_do.dart';
 
 class ToDoItem extends StatelessWidget {
-  const ToDoItem({Key? key}) : super(key: key);
+  final Todo todo;
+  final Function onTodoChanged;
+
+  const ToDoItem({Key? key, required this.todo, required this.onTodoChanged})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,39 +16,27 @@ class ToDoItem extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 20),
       child: ListTile(
         onTap: () {
-          AlertBuilder.buildPostIt(context);
+          AlertBuilder.buildPostIt(context, todo);
         },
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
         ),
         tileColor: Colors.white,
-        leading: const Icon(
-          Icons.check_box,
-          color: darkGrey,
+        leading: Checkbox(
+          value: todo.done,
+          onChanged: (bool? value) {
+            onTodoChanged(todo);
+          },
+          activeColor: darkGrey,
         ),
-        title: const Text(
-          'Check Mail',
+        title: Text(
+          todo.title,
           style: TextStyle(
             fontSize: 16,
             color: darkGrey,
-            decoration: TextDecoration.lineThrough,
+            decoration: todo.done ? TextDecoration.lineThrough : null,
           ),
         ),
-        trailing: Container(
-            height: 35,
-            width: 35,
-            decoration: BoxDecoration(
-              color: deleteIcon,
-              borderRadius: BorderRadius.circular(5),
-            ),
-            child: IconButton(
-              color: Colors.white,
-              iconSize: 16,
-              icon: const Icon(Icons.delete),
-              onPressed: () {
-                log('Clicked on delete icon');
-              },
-            )),
       ),
     );
   }

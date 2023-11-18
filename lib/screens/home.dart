@@ -2,8 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:todo_app/constants/colors.dart';
 import 'package:todo_app/widgets/todo_item.dart';
 
-class Home extends StatelessWidget {
+import '../models/to_do.dart';
+
+class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
+
+  @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  final todosList = Todo.todoList();
 
   @override
   Widget build(BuildContext context) {
@@ -35,11 +44,8 @@ class Home extends StatelessWidget {
                       bottom: 20,
                     ),
                   ),
-                  const ToDoItem(),
-                  const ToDoItem(),
-                  const ToDoItem(),
-                  const ToDoItem(),
-                  const ToDoItem()
+                  for (Todo todoo in todosList)
+                    ToDoItem(todo: todoo, onTodoChanged: _handleTodoChange),
                 ],
               ),
             )
@@ -47,6 +53,12 @@ class Home extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void _handleTodoChange(Todo todo) {
+    setState(() {
+      todo.done = !todo.done;
+    });
   }
 }
 
