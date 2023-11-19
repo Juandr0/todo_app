@@ -77,18 +77,19 @@ class _PostItViewState extends State<PostItView> {
     });
   }
 
-  TextButton _textButton(String text) {
-    return TextButton(
-      onPressed: () => {
-        if (text == 'OK')
-          {
-            // Save instance of Todo item.
-          },
-        Navigator.pop(context, text),
-      },
-      child: Text(text),
-    );
-  }
+  // Not sure if needed
+  // TextButton _textButton(String text) {
+  //   return TextButton(
+  //     onPressed: () => {
+  //       if (text == 'OK')
+  //         {
+  //           // Save instance of Todo item.
+  //         },
+  //       Navigator.pop(context, text),
+  //     },
+  //     child: Text(text),
+  //   );
+  // }
 
   Stack _imageStack() {
     return Stack(

@@ -3,8 +3,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 class SharedPrefHelper {
   static Future<bool> isFirstTime() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool _seen = (prefs.getBool('seen') ?? false);
-    return _seen;
+    bool seen = (prefs.getBool('seen') ?? false);
+    return seen;
   }
 
   static Future<void> setFirstTime() async {

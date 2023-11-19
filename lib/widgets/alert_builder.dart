@@ -13,11 +13,9 @@ class AlertBuilder {
               content: SingleChildScrollView(
                 child: SizedBox(
                   width: MediaQuery.of(context).size.width,
-                  child: PostItView(
-                    todoItem: todo
-                    ),
-                  ),
+                  child: PostItView(todoItem: todo),
                 ),
-              ));
+              ),
+            ));
   }
 }

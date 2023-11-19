@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/constants/app_sizes.dart';
+import 'package:todo_app/constants/app_colors.dart';
 
 class ColorPicker extends StatefulWidget {
   const ColorPicker(this.initialBackgroundColor,
@@ -14,16 +15,6 @@ class ColorPicker extends StatefulWidget {
 
 class _ColorPickerState extends State<ColorPicker> {
   late Color currentColor;
-  final List<Color> colors = [
-    const Color.fromARGB(255, 255, 0, 0),
-    const Color.fromARGB(255, 255, 150, 0),
-    const Color.fromARGB(255, 255, 255, 0),
-    const Color.fromARGB(255, 0, 255, 0),
-    const Color.fromARGB(255, 0, 255, 255),
-    const Color.fromARGB(255, 0, 123, 255),
-    const Color.fromARGB(255, 115, 0, 255),
-    const Color.fromARGB(255, 255, 0, 255),
-  ];
 
   @override
   void initState() {
@@ -31,7 +22,7 @@ class _ColorPickerState extends State<ColorPicker> {
     if (widget.initialBackgroundColor != null) {
       currentColor = widget.initialBackgroundColor!;
     } else {
-      currentColor = colors[2];
+      currentColor = AppColors.palette[2];
     }
   }
 
@@ -46,9 +37,9 @@ class _ColorPickerState extends State<ColorPicker> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: List.generate(
-            colors.length,
+            AppColors.palette.length,
             (index) {
-              return colorContainer(colors[index]);
+              return colorContainer(AppColors.palette[index]);
             },
           ),
         ),
