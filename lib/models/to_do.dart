@@ -16,7 +16,7 @@ class Todo {
   bool done = false;
   Color backgroundColor;
 
-  static List<Todo> mockedTodoList() {
+  static List<Todo> todoList() {
     return [
       Todo(title: 'Buy coffee', done: false),
       Todo(
