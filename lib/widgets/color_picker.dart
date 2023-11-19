@@ -22,7 +22,7 @@ class _ColorPickerState extends State<ColorPicker> {
     if (widget.initialBackgroundColor != null) {
       currentColor = widget.initialBackgroundColor!;
     } else {
-      currentColor = AppColors.palette[2];
+      currentColor = AppColors.defaultPostitBackground;
     }
   }
 
@@ -37,9 +37,9 @@ class _ColorPickerState extends State<ColorPicker> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: List.generate(
-            AppColors.palette.length,
+            AppColors.getPaletteColorsLength(),
             (index) {
-              return colorContainer(AppColors.palette[index]);
+              return colorContainer(AppColors.paletteColors[index]);
             },
           ),
         ),

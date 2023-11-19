@@ -20,13 +20,14 @@ class Todo {
     return [
       Todo(title: 'Buy coffee', done: false),
       Todo(
-          title: 'Go to the gym',
-          done: true,
-          backgroundColor: AppColors.palette[7]),
+        title: 'Go to the gym',
+        done: true,
+        backgroundColor: AppColors.getPaletteColor(PostItColors.aqua),
+      ),
       Todo(
         title: 'Win Hydrox race',
         done: false,
-        backgroundColor: AppColors.palette[3],
+        backgroundColor: AppColors.getPaletteColor(PostItColors.pink),
       )
     ];
   }
