@@ -19,7 +19,7 @@ class CheckMark extends StatelessWidget {
             Icon(
               Icons.check_circle_outline_sharp,
               color: AppColors.darkGrey,
-              size: AppSizes.between * 2,
+              size: AppSizes.between + AppSizes.inline,
             ),
           ],
         ),
