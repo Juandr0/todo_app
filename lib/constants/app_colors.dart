@@ -41,9 +41,9 @@ class AppColors {
         return paletteColors[0];
       case PostItColors.orange:
         return paletteColors[1];
-      case PostItColors.green:
-        return paletteColors[2];
       case PostItColors.yellow:
+        return paletteColors[2];
+      case PostItColors.green:
         return paletteColors[3];
       case PostItColors.aqua:
         return paletteColors[4];
