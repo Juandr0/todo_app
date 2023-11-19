@@ -3,6 +3,7 @@ import 'package:todo_app/constants/app_colors.dart';
 import 'package:todo_app/constants/app_sizes.dart';
 import 'package:todo_app/models/to_do.dart';
 import 'package:todo_app/views/post_it_view.dart';
+import 'package:todo_app/widgets/checkmark.dart';
 
 class AlertBuilder {
   static void buildPostIt(
@@ -33,16 +34,27 @@ class AlertBuilder {
         content: SingleChildScrollView(
           child: SizedBox(
             width: MediaQuery.of(context).size.width,
-            child: PostItView(todoItem: todo),
+            child: Column(
+              children: [
+                Stack(children: [
+                  PostItView(todoItem: todo),
+                  CheckMark(done: todo.done),
+                ]),
+              ],
+            ),
           ),
         ),
         actions: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          Column(
             children: [
-              textButton('Cancel', context),
-              const SizedBox(width: AppSizes.between),
-              textButton('Save', context)
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  textButton('Cancel', context),
+                  const SizedBox(width: AppSizes.between),
+                  textButton('Save', context)
+                ],
+              ),
             ],
           )
         ],
