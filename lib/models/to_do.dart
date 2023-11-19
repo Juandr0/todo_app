@@ -16,10 +16,18 @@ class Todo {
   bool done = false;
   Color backgroundColor;
 
-  static List<Todo> todoList() {
+  static List<Todo> mockedTodoList() {
     return [
       Todo(title: 'Buy coffee', done: false),
-      Todo(title: 'Go to the gym', done: true)
+      Todo(
+          title: 'Go to the gym',
+          done: true,
+          backgroundColor: AppColors.palette[7]),
+      Todo(
+        title: 'Win Hydrox race',
+        done: false,
+        backgroundColor: AppColors.palette[3],
+      )
     ];
   }
 }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/shared-preferences.dart';
+import 'package:todo_app/shared_preferences.dart';
 
 class WelcomeScreen extends StatelessWidget {
   final Color buttonColor = Colors.blue;

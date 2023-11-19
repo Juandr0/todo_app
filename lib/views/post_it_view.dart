@@ -16,7 +16,6 @@ class PostItView extends StatefulWidget {
 class _PostItViewState extends State<PostItView> {
   int titleMaxCharacters = 25;
   int descriptionMaxCharacters = 70;
-  Color backgroundColor = const Color.fromARGB(255, 255, 255, 0);
 
   final titleController = TextEditingController();
   final descriptionController = TextEditingController();
@@ -46,7 +45,7 @@ class _PostItViewState extends State<PostItView> {
     return Column(
       children: [
         Card(
-          color: backgroundColor,
+          color: widget.todoItem.backgroundColor,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(AppSizes.inline),
           ),
@@ -59,7 +58,8 @@ class _PostItViewState extends State<PostItView> {
             ),
           ),
         ),
-        ColorPicker(null, changeBackground: changeBackgroundColor),
+        ColorPicker(widget.todoItem.backgroundColor,
+            changeBackground: changeBackgroundColor),
       ],
     );
   }
@@ -73,7 +73,7 @@ class _PostItViewState extends State<PostItView> {
 
   void changeBackgroundColor(Color newColor) {
     setState(() {
-      backgroundColor = newColor;
+      widget.todoItem.backgroundColor = newColor;
     });
   }
 
