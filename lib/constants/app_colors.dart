@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
-  static const Color defaultPostitBackground = Color.fromARGB(255, 255, 255, 0);
   static const List<Color> palette = [
     Color.fromARGB(255, 255, 0, 0),
     Color.fromARGB(255, 255, 150, 0),
@@ -13,10 +12,8 @@ class AppColors {
     Color.fromARGB(255, 255, 0, 255),
     Color.fromARGB(255, 255, 255, 255)
   ];
+
+  static const Color defaultPostitBackground = Color.fromARGB(255, 255, 255, 0);
+  static const Color darkGrey = Color(0xFF3A3A3A);
+  static const Color backGroundColor = Color(0xFFEEEFF5);
 }
-
-const Color darkGrey = Color(0xFF3A3A3A);
-const Color lightGrey = Color(0xFF717171);
-const Color backGroundColor = Color(0xFFEEEFF5);
-
-const Color deleteIcon = Color(0xFFFF0000);

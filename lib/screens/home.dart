@@ -17,17 +17,17 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: backGroundColor,
+      backgroundColor: AppColors.backGroundColor,
       appBar: AppBar(
-        backgroundColor: backGroundColor,
-        title:
-            const Row(children: [Icon(Icons.menu, color: darkGrey, size: 30)]),
+        backgroundColor: AppColors.backGroundColor,
+        title: const Row(
+            children: [Icon(Icons.menu, color: AppColors.darkGrey, size: 30)]),
         actions: [
           IconButton(
             onPressed: () => Navigator.of(context)
                 .push(MaterialPageRoute(builder: (_) => const SearchPage())),
             icon: const Icon(Icons.search),
-            color: darkGrey,
+            color: AppColors.darkGrey,
           )
         ],
       ),
@@ -68,10 +68,10 @@ class SearchPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: backGroundColor,
+      backgroundColor: AppColors.backGroundColor,
       appBar: AppBar(
-          backgroundColor: backGroundColor,
-          iconTheme: const IconThemeData(color: darkGrey),
+          backgroundColor: AppColors.backGroundColor,
+          iconTheme: const IconThemeData(color: AppColors.darkGrey),
           title: Container(
             width: double.infinity,
             height: 40,

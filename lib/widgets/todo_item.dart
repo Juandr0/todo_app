@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/constants/colors.dart';
+import 'package:todo_app/constants/app_colors.dart';
 import 'package:todo_app/widgets/alert_builder.dart';
 import '../models/to_do.dart';
 
@@ -27,13 +27,13 @@ class ToDoItem extends StatelessWidget {
           onChanged: (bool? value) {
             onTodoChanged(todo);
           },
-          activeColor: darkGrey,
+          activeColor: AppColors.darkGrey,
         ),
         title: Text(
           todo.title,
           style: TextStyle(
             fontSize: 16,
-            color: darkGrey,
+            color: AppColors.darkGrey,
             decoration: todo.done ? TextDecoration.lineThrough : null,
           ),
         ),
