@@ -12,7 +12,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  final todosList = Todo.mockedTodoList();
+  final todosList = Todo.todoList();
 
   @override
   Widget build(BuildContext context) {
