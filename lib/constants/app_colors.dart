@@ -13,7 +13,8 @@ class AppColors {
     Color.fromARGB(255, 255, 255, 255)
   ];
 
+  static const Color backGroundColor = Color(0xFFEEEFF5);
   static const Color defaultPostitBackground = Color.fromARGB(255, 255, 255, 0);
   static const Color darkGrey = Color(0xFF3A3A3A);
-  static const Color backGroundColor = Color(0xFFEEEFF5);
+  static const Color postItSecondary = Color.fromARGB(187, 190, 190, 190);
 }

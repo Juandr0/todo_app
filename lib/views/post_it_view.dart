@@ -4,6 +4,8 @@ import 'package:todo_app/models/to_do.dart';
 import 'package:todo_app/widgets/color_picker.dart';
 import 'package:dotted_border/dotted_border.dart';
 
+enum InputType { title, description }
+
 class PostItView extends StatefulWidget {
   const PostItView({required this.todoItem, super.key});
 
@@ -27,18 +29,10 @@ class _PostItViewState extends State<PostItView> {
 
     var todoFields = [
       _centerTextField(
-        'Title',
-        false,
-        titleMaxCharacters,
-        titleController,
-      ),
+          'Title', false, titleMaxCharacters, titleController, InputType.title),
       const SizedBox(height: AppSizes.between),
-      _centerTextField(
-        'Description',
-        true,
-        descriptionMaxCharacters,
-        descriptionController,
-      ),
+      _centerTextField('Description', true, descriptionMaxCharacters,
+          descriptionController, InputType.description),
       const SizedBox(height: AppSizes.within),
       widget.todoItem.image == null ? _iconButton() : _imageStack(),
     ];
@@ -76,20 +70,6 @@ class _PostItViewState extends State<PostItView> {
       widget.todoItem.backgroundColor = newColor;
     });
   }
-
-  // Not sure if needed
-  // TextButton _textButton(String text) {
-  //   return TextButton(
-  //     onPressed: () => {
-  //       if (text == 'OK')
-  //         {
-  //           // Save instance of Todo item.
-  //         },
-  //       Navigator.pop(context, text),
-  //     },
-  //     child: Text(text),
-  //   );
-  // }
 
   Stack _imageStack() {
     return Stack(
@@ -143,22 +123,26 @@ class _PostItViewState extends State<PostItView> {
     );
   }
 
-  TextField _centerTextField(
-    String title,
-    bool multipleLines,
-    int maxCharacters,
-    textFieldController,
-  ) {
+  TextField _centerTextField(String title, bool multipleLines,
+      int maxCharacters, textFieldController, InputType inputType) {
     int defaultAmount = 1;
 
     return TextField(
-      controller: textFieldController,
-      maxLines: multipleLines ? null : defaultAmount,
-      maxLength: maxCharacters,
-      textAlign: TextAlign.center,
-      decoration: InputDecoration(
-        hintText: title,
-      ),
-    );
+        controller: textFieldController,
+        maxLines: multipleLines ? null : defaultAmount,
+        maxLength: maxCharacters,
+        textAlign: TextAlign.center,
+        decoration: InputDecoration(
+          hintText: title,
+        ),
+        onChanged: (title) {
+          setState(() {
+            if (inputType == InputType.title) {
+              widget.todoItem.title = title;
+            } else {
+              widget.todoItem.description = title;
+            }
+          });
+        });
   }
 }

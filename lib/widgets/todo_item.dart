@@ -3,42 +3,52 @@ import 'package:todo_app/constants/app_colors.dart';
 import 'package:todo_app/widgets/alert_builder.dart';
 import '../models/to_do.dart';
 
-class ToDoItem extends StatelessWidget {
+class ToDoItem extends StatefulWidget {
+  ToDoItem({super.key, required this.todo, required this.onTodoChanged});
   final Todo todo;
   final Function onTodoChanged;
 
-  const ToDoItem({Key? key, required this.todo, required this.onTodoChanged})
-      : super(key: key);
+  @override
+  createState() => _ToDoItemState();
+}
 
+class _ToDoItemState extends State<ToDoItem> {
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: todo.backgroundColor,
+        color: widget.todo.backgroundColor,
         borderRadius: BorderRadius.circular(20),
       ),
       margin: const EdgeInsets.only(bottom: 20),
       child: ListTile(
         onTap: () {
-          AlertBuilder.buildPostIt(context, todo);
+          AlertBuilder.buildPostIt(context, widget.todo, (onTodoChanged) {
+            setState(() {
+              widget.onTodoChanged(widget.todo);
+            });
+          });
         },
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
         ),
         tileColor: Colors.white,
         leading: Checkbox(
-          value: todo.done,
+          value: widget.todo.done,
           onChanged: (bool? value) {
-            onTodoChanged(todo);
+            setState(() {
+              widget.todo.done = !widget.todo.done;
+            });
+            widget.onTodoChanged(widget.todo);
           },
           activeColor: AppColors.darkGrey,
         ),
         title: Text(
-          todo.title,
+          widget.todo.title,
           style: TextStyle(
             fontSize: 16,
             color: AppColors.darkGrey,
-            decoration: todo.done ? TextDecoration.lineThrough : null,
+            decoration: widget.todo.done ? TextDecoration.lineThrough : null,
           ),
         ),
       ),

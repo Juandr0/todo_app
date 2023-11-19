@@ -44,8 +44,12 @@ class _HomeState extends State<Home> {
                       bottom: 20,
                     ),
                   ),
-                  for (Todo todoo in todosList)
-                    ToDoItem(todo: todoo, onTodoChanged: _handleTodoChange),
+                  for (int index = 0; index < todosList.length; index++)
+                    ToDoItem(
+                      todo: todosList[index],
+                      onTodoChanged: (updatedTodo) =>
+                          _handleTodoChange(updatedTodo, index),
+                    ),
                 ],
               ),
             )
@@ -55,9 +59,9 @@ class _HomeState extends State<Home> {
     );
   }
 
-  void _handleTodoChange(Todo todo) {
+  void _handleTodoChange(Todo updatedTodo, int index) {
     setState(() {
-      todo.done = !todo.done;
+      todosList[index] = updatedTodo;
     });
   }
 }
