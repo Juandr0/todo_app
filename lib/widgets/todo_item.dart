@@ -4,7 +4,7 @@ import 'package:todo_app/widgets/alert_builder.dart';
 import '../models/to_do.dart';
 
 class ToDoItem extends StatefulWidget {
-  ToDoItem({super.key, required this.todo, required this.onTodoChanged});
+  const ToDoItem({super.key, required this.todo, required this.onTodoChanged});
   final Todo todo;
   final Function onTodoChanged;
 
