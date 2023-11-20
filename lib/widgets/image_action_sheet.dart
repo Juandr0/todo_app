@@ -14,7 +14,7 @@ class ImageActionSheet extends StatefulWidget {
       context: context,
       actions: <BottomSheetAction>[
         BottomSheetAction(
-          title: const Text('Photo Gallery'),
+          title: const Text('Gallery'),
           onPressed: (context) =>
               _handleImageSelection(context, ImageSource.gallery),
         ),
