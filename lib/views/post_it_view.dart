@@ -4,6 +4,8 @@ import 'package:todo_app/models/to_do.dart';
 import 'package:todo_app/widgets/color_picker.dart';
 import 'package:dotted_border/dotted_border.dart';
 
+enum InputType { title, description }
+
 class PostItView extends StatefulWidget {
   const PostItView({required this.todoItem, super.key});
 
@@ -16,7 +18,6 @@ class PostItView extends StatefulWidget {
 class _PostItViewState extends State<PostItView> {
   int titleMaxCharacters = 25;
   int descriptionMaxCharacters = 70;
-  Color backgroundColor = const Color.fromARGB(255, 255, 255, 0);
 
   final titleController = TextEditingController();
   final descriptionController = TextEditingController();
@@ -28,25 +29,17 @@ class _PostItViewState extends State<PostItView> {
 
     var todoFields = [
       _centerTextField(
-        'Title',
-        false,
-        titleMaxCharacters,
-        titleController,
-      ),
+          'Title', false, titleMaxCharacters, titleController, InputType.title),
       const SizedBox(height: AppSizes.between),
-      _centerTextField(
-        'Description',
-        true,
-        descriptionMaxCharacters,
-        descriptionController,
-      ),
+      _centerTextField('Description', true, descriptionMaxCharacters,
+          descriptionController, InputType.description),
       const SizedBox(height: AppSizes.within),
       widget.todoItem.image == null ? _iconButton() : _imageStack(),
     ];
     return Column(
       children: [
         Card(
-          color: backgroundColor,
+          color: widget.todoItem.backgroundColor,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(AppSizes.inline),
           ),
@@ -59,7 +52,8 @@ class _PostItViewState extends State<PostItView> {
             ),
           ),
         ),
-        ColorPicker(null, changeBackground: changeBackgroundColor),
+        ColorPicker(widget.todoItem.backgroundColor,
+            changeBackground: changeBackgroundColor),
       ],
     );
   }
@@ -73,21 +67,8 @@ class _PostItViewState extends State<PostItView> {
 
   void changeBackgroundColor(Color newColor) {
     setState(() {
-      backgroundColor = newColor;
+      widget.todoItem.backgroundColor = newColor;
     });
-  }
-
-  TextButton _textButton(String text) {
-    return TextButton(
-      onPressed: () => {
-        if (text == 'OK')
-          {
-            // Save instance of Todo item.
-          },
-        Navigator.pop(context, text),
-      },
-      child: Text(text),
-    );
   }
 
   Stack _imageStack() {
@@ -142,22 +123,26 @@ class _PostItViewState extends State<PostItView> {
     );
   }
 
-  TextField _centerTextField(
-    String title,
-    bool multipleLines,
-    int maxCharacters,
-    textFieldController,
-  ) {
+  TextField _centerTextField(String title, bool multipleLines,
+      int maxCharacters, textFieldController, InputType inputType) {
     int defaultAmount = 1;
 
     return TextField(
-      controller: textFieldController,
-      maxLines: multipleLines ? null : defaultAmount,
-      maxLength: maxCharacters,
-      textAlign: TextAlign.center,
-      decoration: InputDecoration(
-        hintText: title,
-      ),
-    );
+        controller: textFieldController,
+        maxLines: multipleLines ? null : defaultAmount,
+        maxLength: maxCharacters,
+        textAlign: TextAlign.center,
+        decoration: InputDecoration(
+          hintText: title,
+        ),
+        onChanged: (title) {
+          setState(() {
+            if (inputType == InputType.title) {
+              widget.todoItem.title = title;
+            } else {
+              widget.todoItem.description = title;
+            }
+          });
+        });
   }
 }
