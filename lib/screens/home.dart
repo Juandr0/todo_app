@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:todo_app/constants/app_colors.dart';
 import 'package:todo_app/widgets/todo_item.dart';
 
+import '../constants/app_sizes.dart';
 import '../models/to_do.dart';
 
 class Home extends StatefulWidget {
@@ -13,6 +14,8 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   final todosList = Todo.todoList();
+  bool isSearchVisible = false;
+  final TextEditingController searchController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -20,19 +23,64 @@ class _HomeState extends State<Home> {
       backgroundColor: AppColors.backGroundColor,
       appBar: AppBar(
         backgroundColor: AppColors.backGroundColor,
-        title: const Row(
-            children: [Icon(Icons.menu, color: AppColors.darkGrey, size: 30)]),
+        title: const Row(children: [
+          Icon(Icons.menu, color: AppColors.darkGrey, size: AppSizes.inline * 5)
+        ]),
         actions: [
-          IconButton(
-            onPressed: () => Navigator.of(context)
-                .push(MaterialPageRoute(builder: (_) => const SearchPage())),
-            icon: const Icon(Icons.search),
-            color: AppColors.darkGrey,
-          )
+          Visibility(
+            visible: !isSearchVisible,
+            child: IconButton(
+              onPressed: () {
+                setState(() {
+                  isSearchVisible = !isSearchVisible;
+                });
+              },
+              icon: const Icon(Icons.search),
+              color: AppColors.darkGrey,
+            ),
+          ),
         ],
+        flexibleSpace: Visibility(
+          visible: isSearchVisible,
+          child: Container(
+            width: double.infinity,
+            height: AppSizes.between * 2,
+            margin: const EdgeInsets.only(
+                top: AppSizes.inline * 11,
+                bottom: AppSizes.between / 2,
+                left: AppSizes.inline * 11,
+                right: AppSizes.between * 2),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(AppSizes.inline),
+            ),
+            child: Center(
+              child: TextField(
+                controller: searchController,
+                decoration: InputDecoration(
+                  prefixIcon: const Icon(Icons.search),
+                  suffixIcon: IconButton(
+                    icon: const Icon(Icons.clear),
+                    onPressed: () {
+                      setState(() {
+                        if (searchController.text.isEmpty) {
+                          isSearchVisible = false;
+                        }
+                        searchController.clear();
+                      });
+                    },
+                  ),
+                  hintText: 'Search...',
+                  border: InputBorder.none,
+                ),
+              ),
+            ),
+          ),
+        ),
       ),
       body: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+        padding: const EdgeInsets.symmetric(
+            horizontal: AppSizes.inline * 3, vertical: AppSizes.inline * 3),
         child: Column(
           children: [
             Expanded(
@@ -40,8 +88,8 @@ class _HomeState extends State<Home> {
                 children: [
                   Container(
                     margin: const EdgeInsets.only(
-                      top: 40,
-                      bottom: 20,
+                      top: AppSizes.between * 2,
+                      bottom: AppSizes.between,
                     ),
                   ),
                   for (int index = 0; index < todosList.length; index++)
@@ -56,6 +104,13 @@ class _HomeState extends State<Home> {
           ],
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          // Add ToDo
+        },
+        backgroundColor: AppColors.darkGrey,
+        child: const Icon(Icons.add),
+      ),
     );
   }
 
@@ -63,39 +118,5 @@ class _HomeState extends State<Home> {
     setState(() {
       todosList[index] = updatedTodo;
     });
-  }
-}
-
-class SearchPage extends StatelessWidget {
-  const SearchPage({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.backGroundColor,
-      appBar: AppBar(
-          backgroundColor: AppColors.backGroundColor,
-          iconTheme: const IconThemeData(color: AppColors.darkGrey),
-          title: Container(
-            width: double.infinity,
-            height: 40,
-            decoration: BoxDecoration(
-                color: Colors.white, borderRadius: BorderRadius.circular(5)),
-            child: Center(
-              child: TextField(
-                decoration: InputDecoration(
-                    prefixIcon: const Icon(Icons.search),
-                    suffixIcon: IconButton(
-                      icon: const Icon(Icons.clear),
-                      onPressed: () {
-                        /* Clear search */
-                      },
-                    ),
-                    hintText: 'Search...',
-                    border: InputBorder.none),
-              ),
-            ),
-          )),
-    );
   }
 }
