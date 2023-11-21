@@ -38,6 +38,8 @@ dependencies:
   dotted_border: ^2.1.0
   cupertino_icons: ^1.0.2
   image_picker: ^1.0.4
+  firebase_auth: ^4.14.0
+  firebase_core: ^2.22.0
 
 
 dev_dependencies:

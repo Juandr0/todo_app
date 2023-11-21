@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/constants/app_colors.dart';
+import 'package:todo_app/services/auth.dart';
 import 'package:todo_app/widgets/todo_item.dart';
 
 import '../constants/app_sizes.dart';
@@ -16,9 +17,11 @@ class _HomeState extends State<Home> {
   final todosList = Todo.todoList();
   bool isSearchVisible = false;
   final TextEditingController searchController = TextEditingController();
+  final _auth = Auth();
 
   @override
   Widget build(BuildContext context) {
+    _auth.signInAnonymously();
     return Scaffold(
       backgroundColor: AppColors.backGroundColor,
       appBar: AppBar(
