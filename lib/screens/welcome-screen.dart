@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:todo_app/constants/app_sizes.dart';
 import 'package:todo_app/constants/colors.dart';
@@ -29,12 +27,14 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   final BorderRadius buttonBorderRadius = BorderRadius.circular(8.0);
 
   final List<ImageData> imageData = [
-    ImageData('assets/note.png', 'This is the first image blabla'),
-    ImageData('assets/note.png', 'Second image bloblo'),
-    ImageData('assets/note.png', 'Third image hoho'),
+    ImageData('assets/note.png',
+        'This is the first image blabl adsadsd asdsadasdas das dada sdadas dads adad'),
+    ImageData('assets/note.png', 'Second image blo sd sd adsds adsd as blo'),
+    ImageData('assets/note.png',
+        'Third image hohd wadawda wdawda waw dawawdaw awdawdawd awdawda wdawd wdwda wado'),
   ];
 
-  int _selectedIndex = -1;
+  int _selectedIndex = 0;
   bool _showDescription = false;
 
   Widget buildTitleSection() {
@@ -69,64 +69,62 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   Widget buildImageSlider(BuildContext context) {
     return Column(
       children: [
+        ImageSliderIndicator(
+          selectedIndex: _selectedIndex,
+          itemCount: imageData.length,
+        ),
+        const SizedBox(
+            height: 10.0), //Little space between indicator and imageslider
         SizedBox(
-          height: 200.0,
-          child: ListView.builder(
-            scrollDirection: Axis.horizontal,
+          height: 250.0,
+          child: PageView.builder(
+            onPageChanged: (index) {
+              setState(() {
+                _selectedIndex = index;
+              });
+            },
             itemCount: imageData.length,
             itemBuilder: (BuildContext context, int index) {
-              return GestureDetector(
-                onTap: () {
-                  setState(() {
-                    _selectedIndex = index;
-                  });
-                },
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 8.0),
-                  child: Stack(
-                    children: [
-                      Container(
-                        height: 250.0,
-                        width: 250.0,
-                        decoration: BoxDecoration(
-                          border: _selectedIndex == index
-                              ? Border.all(color: Colors.blue, width: 2.0)
-                              : null,
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: Row(
+                  children: [
+                    // Image
+                    Container(
+                      width: 200.0,
+                      decoration: BoxDecoration(
+                        border: _selectedIndex == index
+                            ? Border.all(color: Colors.blue, width: 2.0)
+                            : null,
+                      ),
+                      child: ClipRect(
+                        child: Image.asset(
+                          imageData[index].imagePath,
+                          fit: BoxFit.cover,
                         ),
-                        child: ClipRect(
-                          child: BackdropFilter(
-                            filter: ImageFilter.blur(
-                              sigmaX: _selectedIndex == index ? 5.0 : 0.0,
-                              sigmaY: _selectedIndex == index ? 5.0 : 0.0,
+                      ),
+                    ),
+                    // Description Box
+                    Expanded(
+                      child: Container(
+                        padding: EdgeInsets.all(8.0),
+                        margin: EdgeInsets.symmetric(horizontal: 8.0),
+                        child: Center(
+                          child: Text(
+                            imageData[index].description,
+                            style: const TextStyle(
+                              fontSize: 12.0,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
                             ),
-                            child: Image.asset(
-                              imageData[index].imagePath,
-                              fit: BoxFit.cover,
-                            ),
+                            textAlign: TextAlign.center,
+                            maxLines: 3,
+                            overflow: TextOverflow.ellipsis,
                           ),
                         ),
                       ),
-                      if (_selectedIndex == index)
-                        Positioned.fill(
-                          child: Container(
-                            padding: EdgeInsets.all(8.0),
-                            child: Center(
-                              child: Text(
-                                imageData[index].description,
-                                style: const TextStyle(
-                                  fontSize: 12.0,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
-                                ),
-                                textAlign: TextAlign.center,
-                                maxLines: 3,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ),
-                          ),
-                        ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               );
             },
@@ -167,10 +165,10 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           SizedBox(height: verticalSpacing),
           TextButton(
             onPressed: () {
-              // Navigate to more information or tutorial screen
+              // Navigate to about us?
             },
             child: Text(
-              'Learn More',
+              'About us',
               style: TextStyle(fontSize: buttonFontSize, color: buttonColor),
             ),
           ),
@@ -189,10 +187,36 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          // buildTitleSection(),
+          buildTitleSection(),
           buildImageSlider(context),
-          //buildButtonSection(context),
+          buildButtonSection(context),
         ],
+      ),
+    );
+  }
+}
+
+class ImageSliderIndicator extends StatelessWidget {
+  final int selectedIndex;
+  final int itemCount;
+
+  ImageSliderIndicator({required this.selectedIndex, required this.itemCount});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: List.generate(
+        itemCount,
+        (index) => Container(
+          margin: EdgeInsets.symmetric(horizontal: 4.0),
+          width: 8.0,
+          height: 8.0,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: selectedIndex == index ? Colors.blue : Colors.grey.shade400,
+          ),
+        ),
       ),
     );
   }
