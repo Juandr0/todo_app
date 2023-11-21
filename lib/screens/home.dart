@@ -14,7 +14,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  final todosList = Todo.todoList();
+  List<Todo> todos = [];
   bool isSearchVisible = false;
   final TextEditingController searchController = TextEditingController();
   final _auth = Auth();
@@ -95,9 +95,9 @@ class _HomeState extends State<Home> {
                       bottom: AppSizes.between,
                     ),
                   ),
-                  for (int index = 0; index < todosList.length; index++)
+                  for (int index = 0; index < todos.length; index++)
                     ToDoItem(
-                      todo: todosList[index],
+                      todo: todos[index],
                       onTodoChanged: (updatedTodo) =>
                           _handleTodoChange(updatedTodo, index),
                     ),
@@ -119,7 +119,7 @@ class _HomeState extends State<Home> {
 
   void _handleTodoChange(Todo updatedTodo, int index) {
     setState(() {
-      todosList[index] = updatedTodo;
+      todos[index] = updatedTodo;
     });
   }
 }
