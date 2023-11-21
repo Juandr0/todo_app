@@ -20,13 +20,12 @@ class AppColors {
   static const Color postItSecondary = Color.fromARGB(187, 190, 190, 190);
 
   static const List<Color> paletteColors = [
-    Color.fromARGB(255, 255, 0, 0),
+    Color.fromARGB(255, 255, 90, 90),
     Color.fromARGB(255, 255, 150, 0),
     defaultPostitBackground,
     Color.fromARGB(255, 0, 255, 0),
     Color.fromARGB(255, 0, 255, 255),
-    Color.fromARGB(255, 0, 123, 255),
-    Color.fromARGB(255, 115, 0, 255),
+    Color.fromARGB(255, 73, 161, 255),
     Color.fromARGB(255, 255, 0, 255),
     Color.fromARGB(255, 255, 255, 255),
   ];
@@ -49,14 +48,12 @@ class AppColors {
         return paletteColors[4];
       case PostItColors.blue:
         return paletteColors[5];
-      case PostItColors.deepblue:
-        return paletteColors[6];
       case PostItColors.purple:
-        return paletteColors[7];
+        return paletteColors[6];
       case PostItColors.pink:
-        return paletteColors[8];
+        return paletteColors[7];
       case PostItColors.white:
-        return paletteColors[9];
+        return paletteColors[8];
       default:
         return defaultPostitBackground;
     }

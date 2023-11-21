@@ -48,13 +48,14 @@ class _ColorPickerState extends State<ColorPicker> {
   }
 
   Container colorContainer(Color color) {
-    bool highLightColor = currentColor == color;
+    bool isHighlighted = currentColor == color;
+    Color highlightColor = const Color.fromARGB(255, 233, 233, 233);
 
     return Container(
-      decoration: highLightColor
+      decoration: isHighlighted
           ? BoxDecoration(
               border: Border.all(
-                color: Colors.white,
+                color: highlightColor,
                 width: AppSizes.inlineText,
               ),
             )
