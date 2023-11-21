@@ -24,7 +24,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   final double paddingValue = AppSizes.between;
   final double verticalSpacing = AppSizes.between;
   final double buttonSpacing = AppSizes.between * 2;
-  final BorderRadius buttonBorderRadius = BorderRadius.circular(8.0);
+  final BorderRadius buttonBorderRadius =
+      BorderRadius.circular(AppSizes.borderRadius);
 
   final List<ImageData> imageData = [
     ImageData('assets/note.png',
@@ -35,7 +36,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   ];
 
   int _selectedIndex = 0;
-  bool _showDescription = false;
 
   Widget buildTitleSection() {
     return Expanded(
@@ -46,7 +46,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              'Welcome to Your Todo App!',
+              'The Galactic Funky Tofu Brigade Todo-App!',
               style: TextStyle(
                 fontSize: titleFontSize,
                 fontWeight: FontWeight.bold,
@@ -56,7 +56,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             ),
             SizedBox(height: verticalSpacing),
             Text(
-              'Organize your tasks efficiently',
+              'Follow the slide-show before starting!',
               style: TextStyle(fontSize: subtitleFontSize, color: textColor),
               textAlign: TextAlign.center,
             ),
@@ -74,9 +74,10 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           itemCount: imageData.length,
         ),
         const SizedBox(
-            height: 10.0), //Little space between indicator and imageslider
+            height: AppSizes
+                .within), //Little space between indicator and imageslider
         SizedBox(
-          height: 250.0,
+          height: AppSizes.imageBoxHeight,
           child: PageView.builder(
             onPageChanged: (index) {
               setState(() {
@@ -86,15 +87,17 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             itemCount: imageData.length,
             itemBuilder: (BuildContext context, int index) {
               return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                padding: const EdgeInsets.symmetric(
+                    horizontal: AppSizes.borderRadius),
                 child: Row(
                   children: [
                     // Image
                     Container(
-                      width: 200.0,
+                      width: AppSizes.imageBoxWidht,
                       decoration: BoxDecoration(
                         border: _selectedIndex == index
-                            ? Border.all(color: Colors.blue, width: 2.0)
+                            ? Border.all(
+                                color: Colors.blue, width: AppSizes.imageBorder)
                             : null,
                       ),
                       child: ClipRect(
@@ -107,18 +110,19 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     // Description Box
                     Expanded(
                       child: Container(
-                        padding: EdgeInsets.all(8.0),
-                        margin: EdgeInsets.symmetric(horizontal: 8.0),
+                        padding: const EdgeInsets.all(AppSizes.borderRadius),
+                        margin: const EdgeInsets.symmetric(
+                            horizontal: AppSizes.borderRadius),
                         child: Center(
                           child: Text(
                             imageData[index].description,
                             style: const TextStyle(
-                              fontSize: 12.0,
+                              fontSize: AppSizes.buttonText,
                               fontWeight: FontWeight.bold,
-                              color: Colors.black,
+                              color: descriptionTextColor,
                             ),
                             textAlign: TextAlign.center,
-                            maxLines: 3,
+                            maxLines: 10,
                             overflow: TextOverflow.ellipsis,
                           ),
                         ),
@@ -154,8 +158,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               ),
             ),
             child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 12.0, horizontal: 20.0),
+              padding: const EdgeInsets.symmetric(
+                  vertical: AppSizes.buttonText, horizontal: AppSizes.between),
               child: Text(
                 'Get Started',
                 style: TextStyle(fontSize: buttonFontSize),
@@ -210,11 +214,11 @@ class ImageSliderIndicator extends StatelessWidget {
         itemCount,
         (index) => Container(
           margin: EdgeInsets.symmetric(horizontal: 4.0),
-          width: 8.0,
-          height: 8.0,
+          width: AppSizes.borderRadius,
+          height: AppSizes.borderRadius,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: selectedIndex == index ? Colors.blue : Colors.grey.shade400,
+            color: selectedIndex == index ? selectedColor : passiveColor,
           ),
         ),
       ),
