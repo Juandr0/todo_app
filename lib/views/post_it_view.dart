@@ -95,14 +95,12 @@ class _PostItViewState extends State<PostItView> {
     );
   }
 
-  SizedBox _scalableImage(Image image) {
+  SizedBox _scalableImage(Image? image) {
     return SizedBox(
-      child: Image.network(
-        fit: BoxFit.fitWidth,
-        'https://media-cldnry.s-nbcnews.com/image/upload/newscms/2021_07/2233721/171120-smile-stock-njs-333p.jpg',
-      ),
+      child: image ?? const SizedBox.shrink(),
     );
   }
+
 
   DottedBorder _iconButton() {
     return DottedBorder(

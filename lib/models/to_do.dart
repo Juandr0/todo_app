@@ -25,9 +25,10 @@ class Todo {
         backgroundColor: AppColors.getPaletteColor(PostItColors.aqua),
       ),
       Todo(
-        title: 'Win Hydrox race',
+        title: 'Win Hyrox race',
         done: false,
         backgroundColor: AppColors.getPaletteColor(PostItColors.pink),
+        image: Image.asset('assets/hyrox_race.png'),
       )
     ];
   }
