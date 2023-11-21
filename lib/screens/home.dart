@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/constants/app_colors.dart';
+import 'package:todo_app/services/auth.dart';
 import 'package:todo_app/widgets/todo_item.dart';
 
 import '../constants/app_sizes.dart';
@@ -13,12 +14,14 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  final todosList = Todo.todoList();
+  List<Todo> todos = [];
   bool isSearchVisible = false;
   final TextEditingController searchController = TextEditingController();
+  final _auth = Auth();
 
   @override
   Widget build(BuildContext context) {
+    _auth.signInAnonymously();
     return Scaffold(
       backgroundColor: AppColors.backGroundColor,
       appBar: AppBar(
@@ -92,9 +95,9 @@ class _HomeState extends State<Home> {
                       bottom: AppSizes.between,
                     ),
                   ),
-                  for (int index = 0; index < todosList.length; index++)
+                  for (int index = 0; index < todos.length; index++)
                     ToDoItem(
-                      todo: todosList[index],
+                      todo: todos[index],
                       onTodoChanged: (updatedTodo) =>
                           _handleTodoChange(updatedTodo, index),
                     ),
@@ -116,7 +119,7 @@ class _HomeState extends State<Home> {
 
   void _handleTodoChange(Todo updatedTodo, int index) {
     setState(() {
-      todosList[index] = updatedTodo;
+      todos[index] = updatedTodo;
     });
   }
 }
