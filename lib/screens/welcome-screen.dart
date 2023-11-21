@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/constants/app_sizes.dart';
 import 'package:todo_app/constants/colors.dart';
+import 'package:todo_app/constants/strings.dart';
 import 'package:todo_app/shared-preferences.dart';
 
 class WelcomeScreen extends StatefulWidget {
@@ -28,25 +29,23 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
       BorderRadius.circular(AppSizes.borderRadius);
 
   final List<ImageData> imageData = [
-    ImageData('assets/note.png',
-        'This is the first image blabl adsadsd asdsadasdas das dada sdadas dads adad'),
-    ImageData('assets/note.png', 'Second image blo sd sd adsds adsd as blo'),
-    ImageData('assets/note.png',
-        'Third image hohd wadawda wdawda waw dawawdaw awdawdawd awdawda wdawd wdwda wado'),
+    ImageData(Strings.imageOnePath, Strings.imageOneText),
+    ImageData(Strings.imageTwoPath, Strings.imageTwoText),
+    ImageData(Strings.imageThreePath, Strings.imageThreeText),
   ];
 
   int _selectedIndex = 0;
 
   Widget buildTitleSection() {
     return Expanded(
-      flex: 2,
+      flex: 1,
       child: Padding(
         padding: EdgeInsets.all(paddingValue),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              'The Galactic Funky Tofu Brigade Todo-App!',
+              Strings.tofuName,
               style: TextStyle(
                 fontSize: titleFontSize,
                 fontWeight: FontWeight.bold,
@@ -56,7 +55,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             ),
             SizedBox(height: verticalSpacing),
             Text(
-              'Follow the slide-show before starting!',
+              Strings.followSlideShow,
               style: TextStyle(fontSize: subtitleFontSize, color: textColor),
               textAlign: TextAlign.center,
             ),
@@ -161,7 +160,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               padding: const EdgeInsets.symmetric(
                   vertical: AppSizes.buttonText, horizontal: AppSizes.between),
               child: Text(
-                'Get Started',
+                Strings.getStarted,
                 style: TextStyle(fontSize: buttonFontSize),
               ),
             ),
@@ -169,10 +168,14 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           SizedBox(height: verticalSpacing),
           TextButton(
             onPressed: () {
-              // Navigate to about us?
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AboutUsDialog();
+                  });
             },
             child: Text(
-              'About us',
+              Strings.aboutUsButton,
               style: TextStyle(fontSize: buttonFontSize, color: buttonColor),
             ),
           ),
@@ -185,7 +188,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Welcome!!!'),
+        title: const Text(Strings.welcome),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -222,6 +225,29 @@ class ImageSliderIndicator extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class AboutUsDialog extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: const Text(Strings.aboutUsButton),
+      content: const SingleChildScrollView(
+        child: Text(
+          Strings.aboutUs,
+          style: TextStyle(fontSize: 18.0),
+        ),
+      ),
+      actions: <Widget>[
+        TextButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          child: Text('Close'),
+        ),
+      ],
     );
   }
 }
