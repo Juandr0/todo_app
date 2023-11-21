@@ -31,7 +31,7 @@ class _ToDoItemState extends State<ToDoItem> {
           });
         },
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(AppSizes.between),
         ),
         tileColor: Colors.white,
         leading: Checkbox(
@@ -47,7 +47,7 @@ class _ToDoItemState extends State<ToDoItem> {
         title: Text(
           widget.todo.title,
           style: TextStyle(
-            fontSize: 16,
+            fontSize: AppSizes.inlineText * 8,
             color: AppColors.darkGrey,
             decoration: widget.todo.done ? TextDecoration.lineThrough : null,
           ),
