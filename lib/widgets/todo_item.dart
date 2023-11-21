@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/constants/app_colors.dart';
+import 'package:todo_app/constants/app_sizes.dart';
 import 'package:todo_app/widgets/alert_builder.dart';
 import '../models/to_do.dart';
 
@@ -18,9 +19,9 @@ class _ToDoItemState extends State<ToDoItem> {
     return Container(
       decoration: BoxDecoration(
         color: widget.todo.backgroundColor,
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(AppSizes.between),
       ),
-      margin: const EdgeInsets.only(bottom: 20),
+      margin: const EdgeInsets.only(bottom: AppSizes.between),
       child: ListTile(
         onTap: () {
           AlertBuilder.buildPostIt(context, widget.todo, (onTodoChanged) {

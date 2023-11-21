@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:todo_app/constants/app_colors.dart';
 import 'package:todo_app/widgets/todo_item.dart';
 
+import '../constants/app_sizes.dart';
 import '../models/to_do.dart';
 
 class Home extends StatefulWidget {
@@ -22,8 +23,9 @@ class _HomeState extends State<Home> {
       backgroundColor: AppColors.backGroundColor,
       appBar: AppBar(
         backgroundColor: AppColors.backGroundColor,
-        title: const Row(
-            children: [Icon(Icons.menu, color: AppColors.darkGrey, size: 30)]),
+        title: const Row(children: [
+          Icon(Icons.menu, color: AppColors.darkGrey, size: AppSizes.inline * 5)
+        ]),
         actions: [
           Visibility(
             visible: !isSearchVisible,
@@ -42,12 +44,15 @@ class _HomeState extends State<Home> {
           visible: isSearchVisible,
           child: Container(
             width: double.infinity,
-            height: 40,
-            margin:
-                const EdgeInsets.only(top: 52, bottom: 10, left: 55, right: 40),
+            height: AppSizes.between * 2,
+            margin: const EdgeInsets.only(
+                top: AppSizes.inline * 11,
+                bottom: AppSizes.between / 2,
+                left: AppSizes.inline * 11,
+                right: AppSizes.between * 2),
             decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.circular(5),
+              borderRadius: BorderRadius.circular(AppSizes.inline),
             ),
             child: Center(
               child: TextField(
@@ -74,7 +79,8 @@ class _HomeState extends State<Home> {
         ),
       ),
       body: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+        padding: const EdgeInsets.symmetric(
+            horizontal: AppSizes.inline * 3, vertical: AppSizes.inline * 3),
         child: Column(
           children: [
             Expanded(
@@ -82,8 +88,8 @@ class _HomeState extends State<Home> {
                 children: [
                   Container(
                     margin: const EdgeInsets.only(
-                      top: 40,
-                      bottom: 20,
+                      top: AppSizes.between * 2,
+                      bottom: AppSizes.between,
                     ),
                   ),
                   for (int index = 0; index < todosList.length; index++)
