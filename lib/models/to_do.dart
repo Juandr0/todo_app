@@ -16,20 +16,7 @@ class Todo {
   bool done = false;
   Color backgroundColor;
 
-  static List<Todo> todoList() {
-    return [
-      Todo(title: 'Buy coffee', done: false),
-      Todo(
-        title: 'Go to the gym',
-        done: true,
-        backgroundColor: AppColors.getPaletteColor(PostItColors.aqua),
-      ),
-      Todo(
-        title: 'Win Hyrox race',
-        done: false,
-        backgroundColor: AppColors.getPaletteColor(PostItColors.pink),
-        image: Image.asset('assets/hyrox_race.png'),
-      )
-    ];
+  static Todo createTodo() {
+    return Todo(title: '');
   }
 }
