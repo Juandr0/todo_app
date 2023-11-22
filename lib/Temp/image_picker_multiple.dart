@@ -19,7 +19,7 @@ class ImageHelper {
     if (multiple) {
       return await _imagePicker.pickMultiImage(imageQuality: imageQuality);
     }
-    
+
     final file = await _imagePicker.pickImage(
       source: source,
       imageQuality: imageQuality,
