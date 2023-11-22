@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/constants/app_colors.dart';
 import 'package:todo_app/services/auth.dart';
+import 'package:todo_app/widgets/alert_builder.dart';
 import 'package:todo_app/widgets/todo_item.dart';
 
 import '../constants/app_sizes.dart';
@@ -109,7 +110,14 @@ class _HomeState extends State<Home> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // Add ToDo
+          Todo newTodo = Todo.createTodo();
+          AlertBuilder.buildPostIt(context, newTodo, (_handleTodoChange) {
+            setState(() {
+              if (newTodo.title != '') {
+                todos.add(newTodo);
+              }
+            });
+          });
         },
         backgroundColor: AppColors.darkGrey,
         child: const Icon(Icons.add),
