@@ -11,6 +11,16 @@ class FirebaseHandler {
   final _todosController = StreamController<List<Todo>>.broadcast();
   Stream<List<Todo>> get todoStream => _todosController.stream;
 
+  void deleteTodo(Todo todo) async {
+    String uid = _getUserId();
+    db
+        .collection('users')
+        .doc(uid)
+        .collection('todos')
+        .doc(todo.documentId)
+        .delete();
+  }
+
   void saveTodo(Todo todo) async {
     String uid = _getUserId();
 
@@ -39,7 +49,7 @@ class FirebaseHandler {
     } on FirebaseAuthException catch (e) {
       switch (e.code) {
         default:
-          print("Error. $e");
+          print("Error: $e");
       }
     }
   }
