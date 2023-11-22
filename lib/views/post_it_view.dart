@@ -104,7 +104,6 @@ class _PostItViewState extends State<PostItView> {
     );
   }
 
-
   DottedBorder _iconButton() {
     return DottedBorder(
       child: SizedBox(
@@ -112,10 +111,11 @@ class _PostItViewState extends State<PostItView> {
         child: TextButton.icon(
           onPressed: () async {
             final selectedImage = await ImageActionSheet.show(context);
-            log('New selectedImage!');
-            setState(() {
-              widget.todoItem.image = selectedImage as Image?;
-            });
+            if (selectedImage != null) {
+              setState(() {
+                widget.todoItem.image = Image.file(selectedImage);
+              });
+            }
           },
           icon: const Icon(
             Icons.camera_alt,
