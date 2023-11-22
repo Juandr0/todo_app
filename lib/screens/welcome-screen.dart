@@ -3,30 +3,16 @@ import 'package:todo_app/constants/app_sizes.dart';
 import 'package:todo_app/constants/colors.dart';
 import 'package:todo_app/constants/strings.dart';
 import 'package:todo_app/shared-preferences.dart';
+import 'package:todo_app/models/image-data.dart';
 
 class WelcomeScreen extends StatefulWidget {
   @override
   _WelcomeScreenState createState() => _WelcomeScreenState();
 }
 
-class ImageData {
-  final String imagePath;
-  final String description;
-
-  ImageData(this.imagePath, this.description);
-}
-
 class _WelcomeScreenState extends State<WelcomeScreen> {
   final Color buttonColor = darkGrey;
   final Color textColor = lightGrey;
-  final double titleFontSize = AppSizes.titleText;
-  final double subtitleFontSize = AppSizes.subtitleText;
-  final double buttonFontSize = AppSizes.buttonText;
-  final double paddingValue = AppSizes.between;
-  final double verticalSpacing = AppSizes.between;
-  final double buttonSpacing = AppSizes.between * 2;
-  final BorderRadius buttonBorderRadius =
-      BorderRadius.circular(AppSizes.borderRadius);
 
   final List<ImageData> imageData = [
     ImageData(Strings.imageOnePath, Strings.imageOneText),
@@ -40,23 +26,24 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     return Expanded(
       flex: 1,
       child: Padding(
-        padding: EdgeInsets.all(paddingValue),
+        padding: EdgeInsets.all(AppSizes.between),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
               Strings.tofuName,
               style: TextStyle(
-                fontSize: titleFontSize,
+                fontSize: AppSizes.within * 3.2,
                 fontWeight: FontWeight.bold,
                 color: textColor,
               ),
               textAlign: TextAlign.center,
             ),
-            SizedBox(height: verticalSpacing),
+            SizedBox(height: AppSizes.between),
             Text(
               Strings.followSlideShow,
-              style: TextStyle(fontSize: subtitleFontSize, color: textColor),
+              style:
+                  TextStyle(fontSize: AppSizes.within * 1.8, color: textColor),
               textAlign: TextAlign.center,
             ),
           ],
@@ -76,7 +63,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             height: AppSizes
                 .within), //Little space between indicator and imageslider
         SizedBox(
-          height: AppSizes.imageBoxHeight,
+          height: AppSizes.within * 25,
           child: PageView.builder(
             onPageChanged: (index) {
               setState(() {
@@ -87,16 +74,16 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             itemBuilder: (BuildContext context, int index) {
               return Padding(
                 padding: const EdgeInsets.symmetric(
-                    horizontal: AppSizes.borderRadius),
+                    horizontal: AppSizes.within * 0.8),
                 child: Row(
                   children: [
                     // Image
                     Container(
-                      width: AppSizes.imageBoxWidht,
+                      width: AppSizes.within * 20,
                       decoration: BoxDecoration(
                         border: _selectedIndex == index
                             ? Border.all(
-                                color: Colors.blue, width: AppSizes.imageBorder)
+                                color: Colors.blue, width: AppSizes.inlineText)
                             : null,
                       ),
                       child: ClipRect(
@@ -109,19 +96,19 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     // Description Box
                     Expanded(
                       child: Container(
-                        padding: const EdgeInsets.all(AppSizes.borderRadius),
+                        padding: const EdgeInsets.all(AppSizes.within * 0.8),
                         margin: const EdgeInsets.symmetric(
-                            horizontal: AppSizes.borderRadius),
+                            horizontal: AppSizes.inlineText),
                         child: Center(
                           child: Text(
                             imageData[index].description,
                             style: const TextStyle(
-                              fontSize: AppSizes.buttonText,
+                              fontSize: AppSizes.within * 1.6,
                               fontWeight: FontWeight.bold,
                               color: descriptionTextColor,
                             ),
                             textAlign: TextAlign.center,
-                            maxLines: 10,
+                            maxLines: 12,
                             overflow: TextOverflow.ellipsis,
                           ),
                         ),
@@ -152,20 +139,21 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               backgroundColor: MaterialStateProperty.all<Color>(buttonColor),
               shape: MaterialStateProperty.all<OutlinedBorder>(
                 RoundedRectangleBorder(
-                  borderRadius: buttonBorderRadius,
+                  borderRadius: BorderRadius.circular(AppSizes.within * 0.8),
                 ),
               ),
             ),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                  vertical: AppSizes.buttonText, horizontal: AppSizes.between),
+            child: const Padding(
+              padding: EdgeInsets.symmetric(
+                  vertical: AppSizes.within * 1.6,
+                  horizontal: AppSizes.between),
               child: Text(
                 Strings.getStarted,
-                style: TextStyle(fontSize: buttonFontSize),
+                style: TextStyle(fontSize: AppSizes.within * 1.8),
               ),
             ),
           ),
-          SizedBox(height: verticalSpacing),
+          SizedBox(height: AppSizes.between),
           TextButton(
             onPressed: () {
               showDialog(
@@ -176,7 +164,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             },
             child: Text(
               Strings.aboutUsButton,
-              style: TextStyle(fontSize: buttonFontSize, color: buttonColor),
+              style: TextStyle(
+                  fontSize: AppSizes.within * 1.8, color: buttonColor),
             ),
           ),
         ],
@@ -217,8 +206,8 @@ class ImageSliderIndicator extends StatelessWidget {
         itemCount,
         (index) => Container(
           margin: EdgeInsets.symmetric(horizontal: 4.0),
-          width: AppSizes.borderRadius,
-          height: AppSizes.borderRadius,
+          width: AppSizes.within * 0.8,
+          height: AppSizes.within * 0.8,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             color: selectedIndex == index ? selectedColor : passiveColor,
@@ -237,7 +226,7 @@ class AboutUsDialog extends StatelessWidget {
       content: const SingleChildScrollView(
         child: Text(
           Strings.aboutUs,
-          style: TextStyle(fontSize: 18.0),
+          style: TextStyle(fontSize: AppSizes.within * 1.8),
         ),
       ),
       actions: <Widget>[
