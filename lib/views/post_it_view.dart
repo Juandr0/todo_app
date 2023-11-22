@@ -1,8 +1,11 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:todo_app/constants/app_sizes.dart';
 import 'package:todo_app/models/to_do.dart';
 import 'package:todo_app/widgets/color_picker.dart';
 import 'package:dotted_border/dotted_border.dart';
+import 'package:todo_app/widgets/image_action_sheet.dart';
 
 enum InputType { title, description }
 
@@ -107,7 +110,13 @@ class _PostItViewState extends State<PostItView> {
       child: SizedBox(
         width: double.infinity,
         child: TextButton.icon(
-          onPressed: () {},
+          onPressed: () async {
+            final selectedImage = await ImageActionSheet.show(context);
+            log('New selectedImage!');
+            setState(() {
+              widget.todoItem.image = selectedImage as Image?;
+            });
+          },
           icon: const Icon(
             Icons.camera_alt,
             color: Colors.black,

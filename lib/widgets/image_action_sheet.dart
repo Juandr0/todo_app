@@ -52,7 +52,7 @@ class _ImageActionSheetState extends State<ImageActionSheet> {
       ),
       body: Center(
         child:
-            _image == null ? Text('No image selected.') : Image.file(_image!),
+            _image == null ? const Text('No image selected.') : Image.file(_image!),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
