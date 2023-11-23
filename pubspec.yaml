@@ -73,6 +73,7 @@ flutter:
    - assets/note-list-start.png
    - assets/note-list.png
 
+
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/hyrox_race.png
