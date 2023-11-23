@@ -68,8 +68,10 @@ flutter:
   uses-material-design: true
 
   assets: 
-   - assets/note.png
-   - assets/note2.png
+   - assets/note-add.png
+   - assets/note-camera.png
+   - assets/note-list-start.png
+   - assets/note-list.png
 
   # To add assets to your application, add an assets section, like this:
   assets:
