@@ -18,7 +18,7 @@ class Strings {
 
   static const String imageThreePath = 'assets/note-camera.png';
   static const String imageThreeText =
-      'You can simply add a picture from the camera roll of your phone, or take a new one using the camera.';
+      'You can simply add a picture from the camera roll on your phone, or take a new one using the camera.';
 
   static const String imageFourPath = 'assets/note-list.png';
   static const String imageFourText =
