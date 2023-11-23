@@ -12,7 +12,7 @@ class Strings {
   static const String imageOneText =
       'This is where you store all of your todos. On the left there is a checkbox that controlls if a todo is done or not. You can press the item to edit it(see next slide) or delete it using the delete button.';
 
-  static const String imageTwoPath = 'assets/note.png';
+  static const String imageTwoPath = 'assets/note2.png';
   static const String imageTwoText =
       'This is what it looks like when you add a new todo, or press one from the list. You can easily edit the title or the description, aswell as change color and add a image to make it more personal.';
 
