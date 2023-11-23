@@ -18,6 +18,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     ImageData(Strings.imageOnePath, Strings.imageOneText),
     ImageData(Strings.imageTwoPath, Strings.imageTwoText),
     ImageData(Strings.imageThreePath, Strings.imageThreeText),
+    ImageData(Strings.imageFourPath, Strings.imageFourText)
   ];
 
   int _selectedIndex = 0;
