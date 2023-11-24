@@ -86,4 +86,8 @@ class FirebaseHandler {
       return '';
     }
   }
+
+  void disposeListener() async {
+    _todosController.close();
+  }
 }
