@@ -23,8 +23,7 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
-    _firebaseHandler.signInAnonymously();
-    _firebaseHandler.setupTodoListener();
+    _firebaseHandler.signInAndSetup();
   }
 
   @override
@@ -105,7 +104,6 @@ class _HomeState extends State<Home> {
           if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           }
-
           todos = snapshot.data ?? [];
 
           return Container(
