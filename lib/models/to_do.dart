@@ -1,10 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:todo_app/constants/app_colors.dart';
 
 class Todo {
-  Todo(this.image, this.description, {required this.title});
+  Todo({
+    required this.title,
+    this.documentId,
+    this.description,
+    this.image,
+    this.done = false,
+    this.backgroundColor = AppColors.defaultPostitBackground,
+  });
 
+  String? documentId;
   String title;
   String? description;
   Image? image;
   bool done = false;
+  Color backgroundColor;
+
+  static Todo createTodo() {
+    return Todo(title: '');
+  }
 }

@@ -1,6 +1,13 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:todo_app/constants/app_sizes.dart';
 import 'package:todo_app/models/to_do.dart';
+import 'package:todo_app/widgets/color_picker.dart';
+import 'package:dotted_border/dotted_border.dart';
+import 'package:todo_app/widgets/image_action_sheet.dart';
+
+enum InputType { title, description }
 
 class PostItView extends StatefulWidget {
   const PostItView({required this.todoItem, super.key});
@@ -12,9 +19,8 @@ class PostItView extends StatefulWidget {
 }
 
 class _PostItViewState extends State<PostItView> {
-  Size containerSize = const Size(350, 350);
   int titleMaxCharacters = 25;
-  int descriptionMaxCharacters = 75;
+  int descriptionMaxCharacters = 70;
 
   final titleController = TextEditingController();
   final descriptionController = TextEditingController();
@@ -24,37 +30,34 @@ class _PostItViewState extends State<PostItView> {
     titleController.text = widget.todoItem.title;
     descriptionController.text = widget.todoItem.description ?? "";
 
-    return Container(
-      height: containerSize.height,
-      width: containerSize.width,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(AppSizes.inline),
-        color: Colors.yellow,
-      ),
-      child: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(AppSizes.between),
-          child: Column(
-            children: [
-              _centerTextField(
-                'Title',
-                false,
-                titleMaxCharacters,
-                titleController,
-              ),
-              const SizedBox(height: AppSizes.between),
-              _centerTextField(
-                'Description',
-                true,
-                descriptionMaxCharacters,
-                descriptionController,
-              ),
-              const SizedBox(height: AppSizes.within),
-              widget.todoItem.image == null ? _iconButtons() : _imageStack()
-            ],
+    var todoFields = [
+      _centerTextField(
+          'Title', false, titleMaxCharacters, titleController, InputType.title),
+      const SizedBox(height: AppSizes.between),
+      _centerTextField('Description', true, descriptionMaxCharacters,
+          descriptionController, InputType.description),
+      const SizedBox(height: AppSizes.within),
+      widget.todoItem.image == null ? _iconButton() : _imageStack(),
+    ];
+    return Column(
+      children: [
+        Card(
+          color: widget.todoItem.backgroundColor,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(AppSizes.inline),
+          ),
+          child: Center(
+            child: Padding(
+              padding: const EdgeInsets.all(AppSizes.between),
+              child: Column(mainAxisSize: MainAxisSize.min, children: [
+                Column(children: todoFields),
+              ]),
+            ),
           ),
         ),
-      ),
+        ColorPicker(widget.todoItem.backgroundColor,
+            changeBackground: changeBackgroundColor),
+      ],
     );
   }
 
@@ -65,10 +68,16 @@ class _PostItViewState extends State<PostItView> {
     super.dispose();
   }
 
+  void changeBackgroundColor(Color newColor) {
+    setState(() {
+      widget.todoItem.backgroundColor = newColor;
+    });
+  }
+
   Stack _imageStack() {
     return Stack(
       children: [
-        _scalableImage(),
+        _scalableImage(widget.todoItem.image!),
         Align(
           alignment: Alignment.topRight,
           child: IconButton(
@@ -89,49 +98,58 @@ class _PostItViewState extends State<PostItView> {
     );
   }
 
-  SizedBox _scalableImage() {
+  SizedBox _scalableImage(Image? image) {
     return SizedBox(
-      child: Image.network(
+      child: image ?? const SizedBox.shrink(),
+    );
+  }
+
+  DottedBorder _iconButton() {
+    return DottedBorder(
+      child: SizedBox(
         width: double.infinity,
-        fit: BoxFit.fitWidth,
-        'https://media-cldnry.s-nbcnews.com/image/upload/newscms/2021_07/2233721/171120-smile-stock-njs-333p.jpg',
+        child: TextButton.icon(
+          onPressed: () async {
+            final selectedImage = await ImageActionSheet.show(context);
+            if (selectedImage != null) {
+              setState(() {
+                widget.todoItem.image = Image.file(selectedImage);
+              });
+            }
+          },
+          icon: const Icon(
+            Icons.camera_alt,
+            color: Colors.black,
+          ),
+          label: const Text(
+            'Add image',
+            style: TextStyle(color: Colors.black),
+          ),
+        ),
       ),
     );
   }
 
-  Row _iconButtons() {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: [
-        IconButton(
-          onPressed: () {},
-          icon: const Icon(Icons.camera_alt),
-        ),
-        IconButton(
-          onPressed: () {},
-          icon: const Icon(Icons.image_outlined),
-        )
-      ],
-    );
-  }
-
-  TextField _centerTextField(
-    String title,
-    bool multipleLines,
-    int maxCharacters,
-    textFieldController,
-  ) {
+  TextField _centerTextField(String title, bool multipleLines,
+      int maxCharacters, textFieldController, InputType inputType) {
     int defaultAmount = 1;
 
     return TextField(
-      controller: textFieldController,
-      maxLines: multipleLines ? null : defaultAmount,
-      maxLength: maxCharacters,
-      textAlign: TextAlign.center,
-      decoration: InputDecoration(
-        hintText: title,
-      ),
-    );
+        controller: textFieldController,
+        maxLines: multipleLines ? null : defaultAmount,
+        maxLength: maxCharacters,
+        textAlign: TextAlign.center,
+        decoration: InputDecoration(
+          hintText: title,
+        ),
+        onChanged: (title) {
+          setState(() {
+            if (inputType == InputType.title) {
+              widget.todoItem.title = title;
+            } else {
+              widget.todoItem.description = title;
+            }
+          });
+        });
   }
 }
