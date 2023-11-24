@@ -43,7 +43,12 @@ class FirebaseHandler {
     }
   }
 
-  void signInAnonymously() async {
+  void signInAndSetup() async {
+    await signInAnonymously();
+    setupTodoListener();
+  }
+
+  Future signInAnonymously() async {
     try {
       await _auth.signInAnonymously();
     } on FirebaseAuthException catch (e) {
