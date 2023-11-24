@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/constants/app_sizes.dart';
-import 'package:todo_app/constants/colors.dart';
+import 'package:todo_app/constants/app_colors.dart';
 import 'package:todo_app/constants/strings.dart';
-import 'package:todo_app/shared-preferences.dart';
+import 'package:todo_app/shared_preferences.dart';
 import 'package:todo_app/models/image-data.dart';
 
 class WelcomeScreen extends StatefulWidget {
+  const WelcomeScreen({super.key});
+
   @override
   _WelcomeScreenState createState() => _WelcomeScreenState();
 }
 
 class _WelcomeScreenState extends State<WelcomeScreen> {
-  final Color buttonColor = darkGrey;
-  final Color textColor = lightGrey;
+  final Color buttonColor = AppColors.darkGrey;
+  final Color textColor = AppColors.darkGrey;
 
   final List<ImageData> imageData = [
     ImageData(Strings.imageOnePath, Strings.imageOneText),
@@ -106,7 +108,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                             style: const TextStyle(
                               fontSize: AppSizes.within * 1.6,
                               fontWeight: FontWeight.bold,
-                              color: descriptionTextColor,
+                              color: AppColors.darkGrey,
                             ),
                             textAlign: TextAlign.center,
                             maxLines: 12,
@@ -211,7 +213,8 @@ class ImageSliderIndicator extends StatelessWidget {
           height: AppSizes.within * 0.8,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: selectedIndex == index ? selectedColor : passiveColor,
+            color:
+                selectedIndex == index ? AppColors.active : AppColors.inactive,
           ),
         ),
       ),
