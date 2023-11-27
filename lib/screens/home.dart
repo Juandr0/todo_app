@@ -38,8 +38,12 @@ class _HomeState extends State<Home> {
       backgroundColor: AppColors.backGroundColor,
       appBar: AppBar(
         backgroundColor: AppColors.backGroundColor,
-        title: const Row(children: [
-          Icon(Icons.menu, color: AppColors.darkGrey, size: AppSizes.inline * 5)
+        title: Row(children: [
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.menu,
+                color: AppColors.darkGrey, size: AppSizes.inline * 5),
+          ),
         ]),
         actions: [
           Visibility(
