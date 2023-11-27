@@ -17,6 +17,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   List<Todo> todos = [];
   bool isSearchVisible = false;
+  bool isDropdownVisible = false;
   final TextEditingController searchController = TextEditingController();
   final _firebaseHandler = FirebaseHandler();
 
@@ -40,7 +41,11 @@ class _HomeState extends State<Home> {
         backgroundColor: AppColors.backGroundColor,
         title: Row(children: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              setState(() {
+                isDropdownVisible = !isDropdownVisible;
+              });
+            },
             icon: const Icon(Icons.menu,
                 color: AppColors.darkGrey, size: AppSizes.inline * 5),
           ),
@@ -99,7 +104,7 @@ class _HomeState extends State<Home> {
         ),
       ),
       body: Stack(children: [
-        const ThemeHandler(theme: BackgroundTheme.blueBubbles),
+        const ThemeHandler(theme: BackgroundTheme.orangeBubbles),
         StreamBuilder<List<Todo>>(
           stream: _firebaseHandler.todoStream,
           builder: (context, snapshot) {
@@ -142,6 +147,14 @@ class _HomeState extends State<Home> {
               ),
             );
           },
+        ),
+        Visibility(
+          visible: isDropdownVisible,
+          child: Container(
+            color: Colors.white,
+            width: 150,
+            height: 300,
+          ),
         ),
       ]),
       floatingActionButton: FloatingActionButton(
