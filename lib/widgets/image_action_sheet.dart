@@ -18,11 +18,13 @@ class ImageActionSheet extends StatefulWidget {
       actions: <BottomSheetAction>[
         BottomSheetAction(
           title: const Text('Gallery'),
-          onPressed: (BuildContext context) => _handleImageSelection(context, ImageSource.gallery, completer),
+          onPressed: (BuildContext context) =>
+              _handleImageSelection(context, ImageSource.gallery, completer),
         ),
         BottomSheetAction(
           title: const Text('Camera'),
-          onPressed: (BuildContext context) => _handleImageSelection(context, ImageSource.camera, completer),
+          onPressed: (BuildContext context) =>
+              _handleImageSelection(context, ImageSource.camera, completer),
         ),
       ],
       cancelAction: CancelAction(title: const Text('Cancel')),
@@ -31,7 +33,8 @@ class ImageActionSheet extends StatefulWidget {
     return completer.future;
   }
 
-  static void _handleImageSelection(BuildContext context, ImageSource source, Completer<File?> completer) async {
+  static void _handleImageSelection(BuildContext context, ImageSource source,
+      Completer<File?> completer) async {
     try {
       final picker = ImagePicker();
       final pickedFile = await picker.pickImage(source: source);
@@ -80,4 +83,3 @@ class _ImageActionSheetState extends State<ImageActionSheet> {
     );
   }
 }
-

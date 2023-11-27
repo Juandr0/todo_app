@@ -20,6 +20,7 @@ class AppColors {
   static const Color postItSecondary = Color.fromARGB(187, 190, 190, 190);
   static const Color active = Colors.blue;
   static const Color inactive = Colors.grey;
+  static const Color bubblesBackground = Color.fromARGB(255, 15, 94, 156);
 
   static const List<Color> paletteColors = [
     Color.fromARGB(255, 255, 90, 90),
@@ -30,6 +31,13 @@ class AppColors {
     Color.fromARGB(255, 73, 161, 255),
     Color.fromARGB(255, 255, 0, 255),
     Color.fromARGB(255, 255, 255, 255),
+  ];
+
+  static const List<Color> bubbles = [
+    Color.fromARGB(255, 35, 137, 218),
+    Color.fromARGB(255, 28, 163, 236),
+    Color.fromARGB(255, 90, 188, 216),
+    Color.fromARGB(255, 116, 204, 244)
   ];
 
   static int getPaletteColorsLength() {

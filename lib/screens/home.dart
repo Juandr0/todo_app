@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/constants/app_colors.dart';
 import 'package:todo_app/services/firebase_handler.dart';
+import 'package:todo_app/themes/bubbles.dart';
 import 'package:todo_app/widgets/alert_builder.dart';
 import 'package:todo_app/widgets/todo_item.dart';
 
@@ -18,12 +19,14 @@ class _HomeState extends State<Home> {
   List<Todo> todos = [];
   bool isSearchVisible = false;
   final TextEditingController searchController = TextEditingController();
-  final _firebaseHandler = FirebaseHandler();
+  late final FirebaseHandler _firebaseHandler;
 
   @override
   void initState() {
     super.initState();
-    _firebaseHandler.signInAndSetup();
+    _firebaseHandler = FirebaseHandler(context);
+    _firebaseHandler.signInAnonymously();
+    _firebaseHandler.setupTodoListener();
   }
 
   @override
@@ -94,48 +97,52 @@ class _HomeState extends State<Home> {
           ),
         ),
       ),
-      body: StreamBuilder<List<Todo>>(
-        stream: _firebaseHandler.todoStream,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          }
+      body: Stack(children: [
+        const Bubbles(),
+        StreamBuilder<List<Todo>>(
+          stream: _firebaseHandler.todoStream,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            }
 
-          if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
-          }
-          todos = snapshot.data ?? [];
+            if (snapshot.hasError) {
+              return Center(child: Text('Error: ${snapshot.error}'));
+            }
 
-          return Container(
-            padding: const EdgeInsets.symmetric(
-              horizontal: AppSizes.inline * 3,
-              vertical: AppSizes.inline * 3,
-            ),
-            child: Column(
-              children: [
-                Expanded(
-                  child: ListView(
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.only(
-                          top: AppSizes.between * 2,
-                          bottom: AppSizes.between,
+            todos = snapshot.data ?? [];
+
+            return Container(
+              padding: const EdgeInsets.symmetric(
+                horizontal: AppSizes.inline * 3,
+                vertical: AppSizes.inline * 3,
+              ),
+              child: Column(
+                children: [
+                  Expanded(
+                    child: ListView(
+                      children: [
+                        Container(
+                          margin: const EdgeInsets.only(
+                            top: AppSizes.between * 2,
+                            bottom: AppSizes.between,
+                          ),
                         ),
-                      ),
-                      for (int index = 0; index < todos.length; index++)
-                        ToDoItem(
-                          todo: todos[index],
-                          onTodoChanged: (updatedTodo) =>
-                              handleTodoChange(updatedTodo, index),
-                        ),
-                    ],
-                  ),
-                )
-              ],
-            ),
-          );
-        },
-      ),
+                        for (int index = 0; index < todos.length; index++)
+                          ToDoItem(
+                            todo: todos[index],
+                            onTodoChanged: (updatedTodo) =>
+                                handleTodoChange(updatedTodo, index),
+                          ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            );
+          },
+        ),
+      ]),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Todo newTodo = Todo.createTodo();
