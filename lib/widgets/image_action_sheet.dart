@@ -5,7 +5,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:adaptive_action_sheet/adaptive_action_sheet.dart';
 
 class ImageActionSheet extends StatefulWidget {
-  const ImageActionSheet({Key? key});
+  const ImageActionSheet({super.key});
 
   @override
   _ImageActionSheetState createState() => _ImageActionSheetState();

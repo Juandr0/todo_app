@@ -97,7 +97,7 @@ class _HomeState extends State<Home> {
         ),
       ),
       body: Stack(children: [
-        const ThemeHandler(BackgroundTheme.bubbles),
+        const ThemeHandler(theme: BackgroundTheme.orangeBubbles),
         StreamBuilder<List<Todo>>(
           stream: _firebaseHandler.todoStream,
           builder: (context, snapshot) {
