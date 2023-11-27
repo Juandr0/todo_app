@@ -5,6 +5,9 @@ import 'package:todo_app/constants/app_colors.dart';
 class Bubbles extends StatelessWidget {
   const Bubbles({super.key});
 
+  final double bubbleSize = 0.1;
+  final int bubblesAmount = 100;
+
   @override
   Widget build(BuildContext context) {
     return Stack(children: [
@@ -15,9 +18,9 @@ class Bubbles extends StatelessWidget {
       ),
       Positioned.fill(
         child: FloatingBubbles.alwaysRepeating(
-          noOfBubbles: 30,
+          noOfBubbles: bubblesAmount,
           colorsOfBubbles: AppColors.bubbles,
-          sizeFactor: 0.2,
+          sizeFactor: bubbleSize,
           speed: BubbleSpeed.slow,
         ),
       ),

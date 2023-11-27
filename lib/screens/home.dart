@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/constants/app_colors.dart';
 import 'package:todo_app/services/firebase_handler.dart';
-import 'package:todo_app/themes/bubbles.dart';
+import 'package:todo_app/themes/theme_handler.dart';
 import 'package:todo_app/widgets/alert_builder.dart';
 import 'package:todo_app/widgets/todo_item.dart';
-
 import '../constants/app_sizes.dart';
 import '../models/to_do.dart';
 
@@ -98,7 +97,7 @@ class _HomeState extends State<Home> {
         ),
       ),
       body: Stack(children: [
-        const Bubbles(),
+        const ThemeHandler(BackgroundTheme.bubbles),
         StreamBuilder<List<Todo>>(
           stream: _firebaseHandler.todoStream,
           builder: (context, snapshot) {
