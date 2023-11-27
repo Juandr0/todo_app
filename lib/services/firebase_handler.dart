@@ -1,14 +1,13 @@
 import 'dart:async';
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:todo_app/models/to_do.dart';
 
 class FirebaseHandler {
-  FirebaseHandler(this.context);
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final db = FirebaseFirestore.instance;
-  final BuildContext context;
 
   final _todosController = StreamController<List<Todo>>.broadcast();
   Stream<List<Todo>> get todoStream => _todosController.stream;
@@ -54,26 +53,7 @@ class FirebaseHandler {
     try {
       await _auth.signInAnonymously();
     } on FirebaseAuthException catch (e) {
-      switch (e.code) {
-        default:
-          AlertDialog(
-            title: const Text('Error'),
-            content: Text(e.code),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(context, 'Cancel'),
-                child: const Text('Cancel'),
-              ),
-              TextButton(
-                onPressed: () {
-                  signInAnonymously();
-                  Navigator.pop(context, 'Retry');
-                },
-                child: const Text('Retry'),
-              ),
-            ],
-          );
-      }
+      log(e.code);
     }
   }
 

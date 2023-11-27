@@ -18,14 +18,12 @@ class _HomeState extends State<Home> {
   List<Todo> todos = [];
   bool isSearchVisible = false;
   final TextEditingController searchController = TextEditingController();
-  late final FirebaseHandler _firebaseHandler;
+  final _firebaseHandler = FirebaseHandler();
 
   @override
   void initState() {
     super.initState();
-    _firebaseHandler = FirebaseHandler(context);
-    _firebaseHandler.signInAnonymously();
-    _firebaseHandler.setupTodoListener();
+    _firebaseHandler.signInAndSetup();
   }
 
   @override
@@ -97,7 +95,7 @@ class _HomeState extends State<Home> {
         ),
       ),
       body: Stack(children: [
-        const ThemeHandler(theme: BackgroundTheme.orangeBubbles),
+        const ThemeHandler(theme: BackgroundTheme.blueBubbles),
         StreamBuilder<List<Todo>>(
           stream: _firebaseHandler.todoStream,
           builder: (context, snapshot) {
