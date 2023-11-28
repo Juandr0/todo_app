@@ -10,6 +10,7 @@ class FirebaseHandler {
   final db = FirebaseFirestore.instance;
 
   final _todosController = StreamController<List<Todo>>.broadcast();
+
   Stream<List<Todo>> get todoStream => _todosController.stream;
 
   void deleteTodo(Todo todo) async {

@@ -54,6 +54,12 @@ class _HomeState extends State<Home> {
             }
 
             todos = snapshot.data ?? [];
+            List<Todo> filteredTodos = todos
+                .where((todo) =>
+                todo.title.toLowerCase().contains(
+                  searchController.text.toLowerCase(),
+                ))
+                .toList();
 
             return Container(
               padding: const EdgeInsets.symmetric(
@@ -63,23 +69,17 @@ class _HomeState extends State<Home> {
               child: Column(
                 children: [
                   Expanded(
-                    child: ListView(
-                      children: [
-                        Container(
-                          margin: const EdgeInsets.only(
-                            top: AppSizes.between * 2,
-                            bottom: AppSizes.between,
-                          ),
-                        ),
-                        for (int index = 0; index < todos.length; index++)
-                          ToDoItem(
-                            todo: todos[index],
-                            onTodoChanged: (updatedTodo) =>
-                                handleTodoChange(updatedTodo, index),
-                          ),
-                      ],
+                    child: ListView.builder(
+                      itemCount: filteredTodos.length,
+                      itemBuilder: (context, index) {
+                        return ToDoItem(
+                          todo: filteredTodos[index],
+                          onTodoChanged: (updatedTodo) =>
+                              handleTodoChange(updatedTodo, index),
+                        );
+                      },
                     ),
-                  )
+                  ),
                 ],
               ),
             );
@@ -167,6 +167,11 @@ class _HomeState extends State<Home> {
           child: Center(
             child: TextField(
               controller: searchController,
+              onChanged: (value) {
+                setState(() {
+                  // Triggers a rebuild when input changes
+                });
+              },
               decoration: InputDecoration(
                 prefixIcon: const Icon(Icons.search),
                 suffixIcon: IconButton(
