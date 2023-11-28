@@ -78,6 +78,10 @@ flutter:
    - assets/note-camera.png
    - assets/note-list-start.png
    - assets/note-list.png
+   - assets/themes/bluebubbles.png
+   - assets/themes/orangebubbles.png
+   - assets/themes/particles.png
+   - assets/themes/space.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

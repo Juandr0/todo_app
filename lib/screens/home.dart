@@ -21,6 +21,7 @@ class _HomeState extends State<Home> {
   BackgroundTheme activeTheme = BackgroundTheme.disabled;
   final TextEditingController searchController = TextEditingController();
   final _firebaseHandler = FirebaseHandler();
+  int popMenuIndex = 4;
 
   @override
   void initState() {
@@ -114,31 +115,18 @@ class _HomeState extends State<Home> {
     return AppBar(
       backgroundColor: AppColors.backGroundColor,
       leading: PopupMenuButton(
+        initialValue: popMenuIndex,
+        onSelected: (value) {
+          _onMenuItemClicked(value as int);
+        },
         itemBuilder: (ctx) => [
-          PopupMenuItem(
-            child: Text('Blue bubbles'),
-            onTap: () {
-              setState(() {
-                activeTheme = BackgroundTheme.blueBubbles;
-              });
-            },
-          ),
-          PopupMenuItem(
-            child: Text('Orange bubbles'),
-            onTap: () {
-              setState(() {
-                activeTheme = BackgroundTheme.orangeBubbles;
-              });
-            },
-          ),
-          PopupMenuItem(
-            child: Text('Space'),
-            onTap: () {
-              setState(() {
-                activeTheme = BackgroundTheme.space;
-              });
-            },
-          )
+          _buildPopupMenuItem(
+              "Blue bubbles", "assets/themes/bluebubbles.png", 0),
+          _buildPopupMenuItem(
+              "Oranges bubbles", "assets/themes/orangebubbles.png", 1),
+          _buildPopupMenuItem("Particles", "assets/themes/particles.png", 2),
+          _buildPopupMenuItem("Space", "assets/themes/space.png", 3),
+          _buildPopupMenuItem("No theme", null, 4),
         ],
         offset: Offset(0, appBarHeight + AppSizes.within),
         shape: const RoundedRectangleBorder(
@@ -198,6 +186,60 @@ class _HomeState extends State<Home> {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  _onMenuItemClicked(int value) {
+    setState(() {
+      switch (value) {
+        case 0:
+          activeTheme = BackgroundTheme.blueBubbles;
+          popMenuIndex = 0;
+          break;
+        case 1:
+          activeTheme = BackgroundTheme.orangeBubbles;
+          popMenuIndex = 1;
+          break;
+        case 2:
+          activeTheme = BackgroundTheme.particles;
+          popMenuIndex = 2;
+          break;
+        case 3:
+          activeTheme = BackgroundTheme.space;
+          popMenuIndex = 3;
+          break;
+        case 4:
+          activeTheme = BackgroundTheme.disabled;
+          popMenuIndex = 4;
+          break;
+        default:
+          activeTheme = BackgroundTheme.disabled;
+          popMenuIndex = 5;
+          break;
+      }
+    });
+  }
+
+  PopupMenuItem _buildPopupMenuItem(
+      String title, String? imageString, int position) {
+    return PopupMenuItem(
+      value: position,
+      child: Row(
+        children: [
+          imageString == null
+              ? const Icon(
+                  Icons.do_disturb_alt_outlined,
+                  color: Colors.red,
+                )
+              : Image.asset(
+                  imageString,
+                  width: AppSizes.between,
+                  height: AppSizes.between,
+                ),
+          const SizedBox(width: AppSizes.within),
+          Text(title),
+        ],
       ),
     );
   }
