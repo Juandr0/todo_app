@@ -29,7 +29,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     return Expanded(
       flex: 1,
       child: Padding(
-        padding: EdgeInsets.all(AppSizes.between),
+        padding: const EdgeInsets.all(AppSizes.between),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
@@ -42,7 +42,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               ),
               textAlign: TextAlign.center,
             ),
-            SizedBox(height: AppSizes.between),
+            const SizedBox(height: AppSizes.between),
             Text(
               Strings.followSlideShow,
               style:
@@ -156,13 +156,13 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               ),
             ),
           ),
-          SizedBox(height: AppSizes.between),
+          const SizedBox(height: AppSizes.between),
           TextButton(
             onPressed: () {
               showDialog(
                   context: context,
                   builder: (BuildContext context) {
-                    return AboutUsDialog();
+                    return const AboutUsDialog();
                   });
             },
             child: Text(
@@ -199,7 +199,7 @@ class ImageSliderIndicator extends StatelessWidget {
   final int selectedIndex;
   final int itemCount;
 
-  ImageSliderIndicator({required this.selectedIndex, required this.itemCount});
+  const ImageSliderIndicator({super.key, required this.selectedIndex, required this.itemCount});
 
   @override
   Widget build(BuildContext context) {
@@ -208,7 +208,7 @@ class ImageSliderIndicator extends StatelessWidget {
       children: List.generate(
         itemCount,
         (index) => Container(
-          margin: EdgeInsets.symmetric(horizontal: 4.0),
+          margin: const EdgeInsets.symmetric(horizontal: 4.0),
           width: AppSizes.within * 0.8,
           height: AppSizes.within * 0.8,
           decoration: BoxDecoration(
@@ -223,6 +223,8 @@ class ImageSliderIndicator extends StatelessWidget {
 }
 
 class AboutUsDialog extends StatelessWidget {
+  const AboutUsDialog({super.key});
+
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -238,7 +240,7 @@ class AboutUsDialog extends StatelessWidget {
           onPressed: () {
             Navigator.of(context).pop();
           },
-          child: Text('Close'),
+          child: const Text('Close'),
         ),
       ],
     );

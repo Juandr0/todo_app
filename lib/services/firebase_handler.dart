@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -52,10 +53,7 @@ class FirebaseHandler {
     try {
       await _auth.signInAnonymously();
     } on FirebaseAuthException catch (e) {
-      switch (e.code) {
-        default:
-          print("Error: $e");
-      }
+      log(e.code);
     }
   }
 
