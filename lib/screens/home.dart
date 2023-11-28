@@ -18,6 +18,7 @@ class _HomeState extends State<Home> {
   List<Todo> todos = [];
   bool isSearchVisible = false;
   bool isDropdownVisible = false;
+  BackgroundTheme activeTheme = BackgroundTheme.disabled;
   final TextEditingController searchController = TextEditingController();
   final _firebaseHandler = FirebaseHandler();
 
@@ -37,74 +38,9 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.backGroundColor,
-      appBar: AppBar(
-        backgroundColor: AppColors.backGroundColor,
-        title: Row(children: [
-          IconButton(
-            onPressed: () {
-              setState(() {
-                isDropdownVisible = !isDropdownVisible;
-              });
-            },
-            icon: const Icon(Icons.menu,
-                color: AppColors.darkGrey, size: AppSizes.inline * 5),
-          ),
-        ]),
-        actions: [
-          Visibility(
-            visible: !isSearchVisible,
-            child: IconButton(
-              onPressed: () {
-                setState(() {
-                  isSearchVisible = !isSearchVisible;
-                });
-              },
-              icon: const Icon(Icons.search),
-              color: AppColors.darkGrey,
-            ),
-          ),
-        ],
-        flexibleSpace: Visibility(
-          visible: isSearchVisible,
-          child: Container(
-            width: double.infinity,
-            height: AppSizes.between * 2,
-            margin: const EdgeInsets.only(
-              top: AppSizes.inline * 11,
-              bottom: AppSizes.between / 2,
-              left: AppSizes.inline * 11,
-              right: AppSizes.between * 2,
-            ),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(AppSizes.inline),
-            ),
-            child: Center(
-              child: TextField(
-                controller: searchController,
-                decoration: InputDecoration(
-                  prefixIcon: const Icon(Icons.search),
-                  suffixIcon: IconButton(
-                    icon: const Icon(Icons.clear),
-                    onPressed: () {
-                      setState(() {
-                        if (searchController.text.isEmpty) {
-                          isSearchVisible = false;
-                        }
-                        searchController.clear();
-                      });
-                    },
-                  ),
-                  hintText: 'Search...',
-                  border: InputBorder.none,
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
+      appBar: _buildAppBar(),
       body: Stack(children: [
-        const ThemeHandler(theme: BackgroundTheme.orangeBubbles),
+        ThemeHandler(theme: activeTheme),
         StreamBuilder<List<Todo>>(
           stream: _firebaseHandler.todoStream,
           builder: (context, snapshot) {
@@ -148,14 +84,6 @@ class _HomeState extends State<Home> {
             );
           },
         ),
-        Visibility(
-          visible: isDropdownVisible,
-          child: Container(
-            color: Colors.white,
-            width: 150,
-            height: 300,
-          ),
-        ),
       ]),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -179,5 +107,98 @@ class _HomeState extends State<Home> {
       todos[index] = updatedTodo;
       _firebaseHandler.saveTodo(updatedTodo);
     });
+  }
+
+  AppBar _buildAppBar() {
+    var appBarHeight = AppBar().preferredSize.height;
+    return AppBar(
+      backgroundColor: AppColors.backGroundColor,
+      leading: PopupMenuButton(
+        itemBuilder: (ctx) => [
+          PopupMenuItem(
+            child: Text('Blue bubbles'),
+            onTap: () {
+              setState(() {
+                activeTheme = BackgroundTheme.blueBubbles;
+              });
+            },
+          ),
+          PopupMenuItem(
+            child: Text('Orange bubbles'),
+            onTap: () {
+              setState(() {
+                activeTheme = BackgroundTheme.orangeBubbles;
+              });
+            },
+          ),
+          PopupMenuItem(
+            child: Text('Space'),
+            onTap: () {
+              setState(() {
+                activeTheme = BackgroundTheme.space;
+              });
+            },
+          )
+        ],
+        offset: Offset(0, appBarHeight + AppSizes.within),
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(AppSizes.inline)),
+        ),
+        icon: const Icon(Icons.menu,
+            color: AppColors.darkGrey, size: AppSizes.inline * 5),
+      ),
+      actions: [
+        Visibility(
+          visible: !isSearchVisible,
+          child: IconButton(
+            onPressed: () {
+              setState(() {
+                isSearchVisible = !isSearchVisible;
+              });
+            },
+            icon: const Icon(Icons.search),
+            color: AppColors.darkGrey,
+          ),
+        ),
+      ],
+      flexibleSpace: Visibility(
+        visible: isSearchVisible,
+        child: Container(
+          width: double.infinity,
+          height: AppSizes.between * 2,
+          margin: const EdgeInsets.only(
+            top: AppSizes.inline * 11,
+            bottom: AppSizes.between / 2,
+            left: AppSizes.inline * 11,
+            right: AppSizes.between * 2,
+          ),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(AppSizes.inline),
+          ),
+          child: Center(
+            child: TextField(
+              controller: searchController,
+              decoration: InputDecoration(
+                prefixIcon: const Icon(Icons.search),
+                suffixIcon: IconButton(
+                  icon: const Icon(Icons.clear),
+                  onPressed: () {
+                    setState(() {
+                      if (searchController.text.isEmpty) {
+                        isSearchVisible = false;
+                      }
+                      searchController.clear();
+                    });
+                  },
+                ),
+                hintText: 'Search...',
+                border: InputBorder.none,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
