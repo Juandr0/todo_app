@@ -17,8 +17,11 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   List<Todo> todos = [];
   bool isSearchVisible = false;
+  bool isDropdownVisible = false;
+  BackgroundTheme activeTheme = BackgroundTheme.disabled;
   final TextEditingController searchController = TextEditingController();
   final _firebaseHandler = FirebaseHandler();
+  int popMenuIndex = 4;
 
   @override
   void initState() {
@@ -36,66 +39,9 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.backGroundColor,
-      appBar: AppBar(
-        backgroundColor: AppColors.backGroundColor,
-        title: const Row(children: [
-          Icon(Icons.menu, color: AppColors.darkGrey, size: AppSizes.inline * 5)
-        ]),
-        actions: [
-          Visibility(
-            visible: !isSearchVisible,
-            child: IconButton(
-              onPressed: () {
-                setState(() {
-                  isSearchVisible = !isSearchVisible;
-                });
-              },
-              icon: const Icon(Icons.search),
-              color: AppColors.darkGrey,
-            ),
-          ),
-        ],
-        flexibleSpace: Visibility(
-          visible: isSearchVisible,
-          child: Container(
-            width: double.infinity,
-            height: AppSizes.between * 2,
-            margin: const EdgeInsets.only(
-              top: AppSizes.inline * 11,
-              bottom: AppSizes.between / 2,
-              left: AppSizes.inline * 11,
-              right: AppSizes.between * 2,
-            ),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(AppSizes.inline),
-            ),
-            child: Center(
-              child: TextField(
-                controller: searchController,
-                decoration: InputDecoration(
-                  prefixIcon: const Icon(Icons.search),
-                  suffixIcon: IconButton(
-                    icon: const Icon(Icons.clear),
-                    onPressed: () {
-                      setState(() {
-                        if (searchController.text.isEmpty) {
-                          isSearchVisible = false;
-                        }
-                        searchController.clear();
-                      });
-                    },
-                  ),
-                  hintText: 'Search...',
-                  border: InputBorder.none,
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
+      appBar: _buildAppBar(),
       body: Stack(children: [
-        const ThemeHandler(theme: BackgroundTheme.blueBubbles),
+        ThemeHandler(theme: activeTheme),
         StreamBuilder<List<Todo>>(
           stream: _firebaseHandler.todoStream,
           builder: (context, snapshot) {
@@ -162,5 +108,139 @@ class _HomeState extends State<Home> {
       todos[index] = updatedTodo;
       _firebaseHandler.saveTodo(updatedTodo);
     });
+  }
+
+  AppBar _buildAppBar() {
+    var appBarHeight = AppBar().preferredSize.height;
+    return AppBar(
+      backgroundColor: AppColors.backGroundColor,
+      leading: PopupMenuButton(
+        initialValue: popMenuIndex,
+        onSelected: (value) {
+          _onMenuItemClicked(value as int);
+        },
+        itemBuilder: (ctx) => [
+          _buildPopupMenuItem(
+              "Blue bubbles", "assets/themes/bluebubbles.png", 0),
+          _buildPopupMenuItem(
+              "Oranges bubbles", "assets/themes/orangebubbles.png", 1),
+          _buildPopupMenuItem("Particles", "assets/themes/particles.png", 2),
+          _buildPopupMenuItem("Space", "assets/themes/space.png", 3),
+          _buildPopupMenuItem("No theme", null, 4),
+        ],
+        offset: Offset(0, appBarHeight + AppSizes.within),
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(AppSizes.inline)),
+        ),
+        icon: const Icon(Icons.menu,
+            color: AppColors.darkGrey, size: AppSizes.inline * 5),
+      ),
+      actions: [
+        Visibility(
+          visible: !isSearchVisible,
+          child: IconButton(
+            onPressed: () {
+              setState(() {
+                isSearchVisible = !isSearchVisible;
+              });
+            },
+            icon: const Icon(Icons.search),
+            color: AppColors.darkGrey,
+          ),
+        ),
+      ],
+      flexibleSpace: Visibility(
+        visible: isSearchVisible,
+        child: Container(
+          width: double.infinity,
+          height: AppSizes.between * 2,
+          margin: const EdgeInsets.only(
+            top: AppSizes.inline * 11,
+            bottom: AppSizes.between / 2,
+            left: AppSizes.inline * 11,
+            right: AppSizes.between * 2,
+          ),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(AppSizes.inline),
+          ),
+          child: Center(
+            child: TextField(
+              controller: searchController,
+              decoration: InputDecoration(
+                prefixIcon: const Icon(Icons.search),
+                suffixIcon: IconButton(
+                  icon: const Icon(Icons.clear),
+                  onPressed: () {
+                    setState(() {
+                      if (searchController.text.isEmpty) {
+                        isSearchVisible = false;
+                      }
+                      searchController.clear();
+                    });
+                  },
+                ),
+                hintText: 'Search...',
+                border: InputBorder.none,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  _onMenuItemClicked(int value) {
+    setState(() {
+      switch (value) {
+        case 0:
+          activeTheme = BackgroundTheme.blueBubbles;
+          popMenuIndex = 0;
+          break;
+        case 1:
+          activeTheme = BackgroundTheme.orangeBubbles;
+          popMenuIndex = 1;
+          break;
+        case 2:
+          activeTheme = BackgroundTheme.particles;
+          popMenuIndex = 2;
+          break;
+        case 3:
+          activeTheme = BackgroundTheme.space;
+          popMenuIndex = 3;
+          break;
+        case 4:
+          activeTheme = BackgroundTheme.disabled;
+          popMenuIndex = 4;
+          break;
+        default:
+          activeTheme = BackgroundTheme.disabled;
+          popMenuIndex = 5;
+          break;
+      }
+    });
+  }
+
+  PopupMenuItem _buildPopupMenuItem(
+      String title, String? imageString, int position) {
+    return PopupMenuItem(
+      value: position,
+      child: Row(
+        children: [
+          imageString == null
+              ? const Icon(
+                  Icons.do_disturb_alt_outlined,
+                  color: Colors.red,
+                )
+              : Image.asset(
+                  imageString,
+                  width: AppSizes.between,
+                  height: AppSizes.between,
+                ),
+          const SizedBox(width: AppSizes.within),
+          Text(title),
+        ],
+      ),
+    );
   }
 }
