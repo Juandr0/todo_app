@@ -28,9 +28,7 @@ class _HomeState extends State<Home> {
   void initState() {
     super.initState();
     _firebaseHandler.signInAndSetup();
-    setState(() {
-      _loadThemeIndex();
-    });
+    _loadThemeIndex();
   }
 
   Future<void> _loadThemeIndex() async {
