@@ -129,6 +129,7 @@ class _HomeState extends State<Home> {
           _onMenuItemClicked(value as int);
         },
         itemBuilder: (ctx) => [
+          _buildPopupMenuItem('Themes', null, -1),
           _buildPopupMenuItem(
               "Blue bubbles", "assets/themes/bluebubbles.png", 0),
           _buildPopupMenuItem(
@@ -237,24 +238,38 @@ class _HomeState extends State<Home> {
 
   PopupMenuItem _buildPopupMenuItem(
       String title, String? imageString, int position) {
-    return PopupMenuItem(
-      value: position,
-      child: Row(
-        children: [
-          imageString == null
-              ? const Icon(
-                  Icons.do_disturb_alt_outlined,
-                  color: Colors.red,
-                )
-              : Image.asset(
-                  imageString,
-                  width: AppSizes.between,
-                  height: AppSizes.between,
-                ),
-          const SizedBox(width: AppSizes.within),
-          Text(title),
-        ],
-      ),
-    );
+    if (position == -1) {
+      return const PopupMenuItem(
+        value: -1,
+        enabled: false,
+        child: Text(
+          "Themes",
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: AppColors.darkGrey,
+          ),
+        ),
+      );
+    } else {
+      return PopupMenuItem(
+        value: position,
+        child: Row(
+          children: [
+            imageString == null
+                ? const Icon(
+                    Icons.do_disturb_alt_outlined,
+                    color: Colors.red,
+                  )
+                : Image.asset(
+                    imageString,
+                    width: AppSizes.between,
+                    height: AppSizes.between,
+                  ),
+            const SizedBox(width: AppSizes.within),
+            Text(title),
+          ],
+        ),
+      );
+    }
   }
 }
