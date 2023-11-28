@@ -111,7 +111,6 @@ class _HomeState extends State<Home> {
   }
 
   AppBar _buildAppBar() {
-    var appBarHeight = AppBar().preferredSize.height;
     return AppBar(
       backgroundColor: AppColors.backGroundColor,
       leading: PopupMenuButton(
@@ -128,7 +127,6 @@ class _HomeState extends State<Home> {
           _buildPopupMenuItem("Space", "assets/themes/space.png", 3),
           _buildPopupMenuItem("No theme", null, 4),
         ],
-        offset: Offset(0, appBarHeight + AppSizes.within),
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(AppSizes.inline)),
         ),
