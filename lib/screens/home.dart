@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/constants/app_colors.dart';
 import 'package:todo_app/services/firebase_handler.dart';
+import 'package:todo_app/shared_preferences.dart';
 import 'package:todo_app/themes/theme_handler.dart';
 import 'package:todo_app/widgets/alert_builder.dart';
 import 'package:todo_app/widgets/todo_item.dart';
@@ -27,6 +28,15 @@ class _HomeState extends State<Home> {
   void initState() {
     super.initState();
     _firebaseHandler.signInAndSetup();
+    _loadThemeIndex();
+  }
+
+  Future<void> _loadThemeIndex() async {
+    int themeIndex = await SharedPrefHelper.getThemeIndex();
+    setState(() {
+      popMenuIndex = themeIndex;
+      _onMenuItemClicked(popMenuIndex);
+    });
   }
 
   @override
@@ -111,7 +121,6 @@ class _HomeState extends State<Home> {
   }
 
   AppBar _buildAppBar() {
-    var appBarHeight = AppBar().preferredSize.height;
     return AppBar(
       backgroundColor: AppColors.backGroundColor,
       leading: PopupMenuButton(
@@ -120,6 +129,7 @@ class _HomeState extends State<Home> {
           _onMenuItemClicked(value as int);
         },
         itemBuilder: (ctx) => [
+          _buildPopupMenuItem('Themes', null, -1),
           _buildPopupMenuItem(
               "Blue bubbles", "assets/themes/bluebubbles.png", 0),
           _buildPopupMenuItem(
@@ -128,7 +138,6 @@ class _HomeState extends State<Home> {
           _buildPopupMenuItem("Space", "assets/themes/space.png", 3),
           _buildPopupMenuItem("No theme", null, 4),
         ],
-        offset: Offset(0, appBarHeight + AppSizes.within),
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(AppSizes.inline)),
         ),
@@ -223,29 +232,44 @@ class _HomeState extends State<Home> {
           popMenuIndex = 5;
           break;
       }
+      SharedPrefHelper.setThemeIndex(popMenuIndex);
     });
   }
 
   PopupMenuItem _buildPopupMenuItem(
       String title, String? imageString, int position) {
-    return PopupMenuItem(
-      value: position,
-      child: Row(
-        children: [
-          imageString == null
-              ? const Icon(
-                  Icons.do_disturb_alt_outlined,
-                  color: Colors.red,
-                )
-              : Image.asset(
-                  imageString,
-                  width: AppSizes.between,
-                  height: AppSizes.between,
-                ),
-          const SizedBox(width: AppSizes.within),
-          Text(title),
-        ],
-      ),
-    );
+    if (position == -1) {
+      return const PopupMenuItem(
+        value: -1,
+        enabled: false,
+        child: Text(
+          "Themes",
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: AppColors.darkGrey,
+          ),
+        ),
+      );
+    } else {
+      return PopupMenuItem(
+        value: position,
+        child: Row(
+          children: [
+            imageString == null
+                ? const Icon(
+                    Icons.do_disturb_alt_outlined,
+                    color: Colors.red,
+                  )
+                : Image.asset(
+                    imageString,
+                    width: AppSizes.between,
+                    height: AppSizes.between,
+                  ),
+            const SizedBox(width: AppSizes.within),
+            Text(title),
+          ],
+        ),
+      );
+    }
   }
 }
