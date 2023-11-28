@@ -55,10 +55,9 @@ class _HomeState extends State<Home> {
 
             todos = snapshot.data ?? [];
             List<Todo> filteredTodos = todos
-                .where((todo) =>
-                todo.title.toLowerCase().contains(
-                  searchController.text.toLowerCase(),
-                ))
+                .where((todo) => todo.title.toLowerCase().contains(
+                      searchController.text.toLowerCase(),
+                    ))
                 .toList();
 
             return Container(
@@ -72,10 +71,24 @@ class _HomeState extends State<Home> {
                     child: ListView.builder(
                       itemCount: filteredTodos.length,
                       itemBuilder: (context, index) {
-                        return ToDoItem(
-                          todo: filteredTodos[index],
-                          onTodoChanged: (updatedTodo) =>
-                              handleTodoChange(updatedTodo, index),
+                        return Dismissible(
+                          key: Key(filteredTodos[index].documentId ?? ''),
+                          direction: DismissDirection.endToStart,
+                          background: Container(
+                            color: Colors.red,
+                            alignment: Alignment.centerRight,
+                            padding: const EdgeInsets.only(right: AppSizes.inline),
+                            child:
+                                const Icon(Icons.delete, color: Colors.white),
+                          ),
+                          onDismissed: (direction) {
+                            _firebaseHandler.deleteTodo(filteredTodos[index]);
+                          },
+                          child: ToDoItem(
+                            todo: filteredTodos[index],
+                            onTodoChanged: (updatedTodo) =>
+                                handleTodoChange(updatedTodo, index),
+                          ),
                         );
                       },
                     ),
