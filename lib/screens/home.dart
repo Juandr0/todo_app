@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/constants/app_colors.dart';
 import 'package:todo_app/services/firebase_handler.dart';
+import 'package:todo_app/shared_preferences.dart';
 import 'package:todo_app/themes/theme_handler.dart';
 import 'package:todo_app/widgets/alert_builder.dart';
 import 'package:todo_app/widgets/todo_item.dart';
@@ -27,6 +28,17 @@ class _HomeState extends State<Home> {
   void initState() {
     super.initState();
     _firebaseHandler.signInAndSetup();
+    setState(() {
+      _loadThemeIndex();
+    });
+  }
+
+  Future<void> _loadThemeIndex() async {
+    int themeIndex = await SharedPrefHelper.getThemeIndex();
+    setState(() {
+      popMenuIndex = themeIndex;
+      _onMenuItemClicked(popMenuIndex);
+    });
   }
 
   @override
@@ -221,6 +233,7 @@ class _HomeState extends State<Home> {
           popMenuIndex = 5;
           break;
       }
+      SharedPrefHelper.setThemeIndex(popMenuIndex);
     });
   }
 
