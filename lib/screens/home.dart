@@ -87,7 +87,8 @@ class _HomeState extends State<Home> {
                           background: Container(
                             color: Colors.red,
                             alignment: Alignment.centerRight,
-                            padding: const EdgeInsets.only(right: AppSizes.inline),
+                            padding:
+                                const EdgeInsets.only(right: AppSizes.inline),
                             child:
                                 const Icon(Icons.delete, color: Colors.white),
                           ),
@@ -145,11 +146,12 @@ class _HomeState extends State<Home> {
           _buildPopupMenuItem('Themes', null, -1),
           _buildPopupMenuItem(
               "Blue bubbles", "assets/themes/bluebubbles.png", 0),
+          _buildPopupMenuItem("Mysman", "assets/themes/mysman.png", 1),
           _buildPopupMenuItem(
-              "Oranges bubbles", "assets/themes/orangebubbles.png", 1),
-          _buildPopupMenuItem("Particles", "assets/themes/particles.png", 2),
-          _buildPopupMenuItem("Space", "assets/themes/space.png", 3),
-          _buildPopupMenuItem("No theme", null, 4),
+              "Oranges bubbles", "assets/themes/orangebubbles.png", 2),
+          _buildPopupMenuItem("Particles", "assets/themes/particles.png", 3),
+          _buildPopupMenuItem("Space", "assets/themes/space.png", 4),
+          _buildPopupMenuItem("No theme", null, 5),
         ],
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(AppSizes.inline)),
@@ -225,20 +227,25 @@ class _HomeState extends State<Home> {
           popMenuIndex = 0;
           break;
         case 1:
-          activeTheme = BackgroundTheme.orangeBubbles;
+          activeTheme = BackgroundTheme.mysman;
           popMenuIndex = 1;
           break;
         case 2:
-          activeTheme = BackgroundTheme.particles;
+          activeTheme = BackgroundTheme.orangeBubbles;
           popMenuIndex = 2;
           break;
+
         case 3:
-          activeTheme = BackgroundTheme.space;
+          activeTheme = BackgroundTheme.particles;
           popMenuIndex = 3;
           break;
         case 4:
-          activeTheme = BackgroundTheme.disabled;
+          activeTheme = BackgroundTheme.space;
           popMenuIndex = 4;
+          break;
+        case 5:
+          activeTheme = BackgroundTheme.disabled;
+          popMenuIndex = 5;
           break;
         default:
           activeTheme = BackgroundTheme.disabled;

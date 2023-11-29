@@ -3,13 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:todo_app/models/bubbles_model.dart';
 import 'package:todo_app/themes/bubbles.dart';
 import 'package:todo_app/themes/backgrounds.dart';
+import 'package:todo_app/themes/mysman.dart';
 
 enum BackgroundTheme {
   blueBubbles,
-  orangeBubbles,
-  space,
-  particles,
   disabled,
+  mysman,
+  orangeBubbles,
+  particles,
+  space,
 }
 
 class ThemeHandler extends StatelessWidget {
@@ -22,6 +24,8 @@ class ThemeHandler extends StatelessWidget {
       case BackgroundTheme.blueBubbles:
         return Bubbles(bubbles: BubblesModel.blueBubbles, key: UniqueKey());
 
+      case BackgroundTheme.mysman:
+        return Mysman();
       case BackgroundTheme.orangeBubbles:
         return Bubbles(bubbles: BubblesModel.orangeBubbles, key: UniqueKey());
 
