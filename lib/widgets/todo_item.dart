@@ -18,7 +18,7 @@ class _ToDoItemState extends State<ToDoItem> {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: widget.todo.backgroundColor,
+        color: widget.todo.backgroundColor.withOpacity(0.8),
         borderRadius: BorderRadius.circular(AppSizes.between),
       ),
       margin: const EdgeInsets.only(bottom: AppSizes.between),
