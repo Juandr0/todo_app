@@ -17,6 +17,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   List<Todo> todos = [];
+  bool isAddButtonEnabled = true;
   bool isSearchVisible = false;
   bool isDropdownVisible = false;
   BackgroundTheme activeTheme = BackgroundTheme.disabled;
@@ -57,7 +58,10 @@ class _HomeState extends State<Home> {
           stream: _firebaseHandler.todoStream,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
+              setState(() => isAddButtonEnabled = false);
               return const Center(child: CircularProgressIndicator());
+            } else {
+              setState(() => isAddButtonEnabled = true);
             }
 
             if (snapshot.hasError) {
@@ -122,17 +126,21 @@ class _HomeState extends State<Home> {
       ]),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Todo newTodo = Todo.createTodo();
-          AlertBuilder.buildPostIt(context, newTodo, (handleTodoChange) {
-            setState(() {
-              if (newTodo.title != '') {
-                _firebaseHandler.saveTodo(newTodo);
-              }
+          if (isAddButtonEnabled) {
+            Todo newTodo = Todo.createTodo();
+            AlertBuilder.buildPostIt(context, newTodo, (handleTodoChange) {
+              setState(() {
+                if (newTodo.title != '') {
+                  _firebaseHandler.saveTodo(newTodo);
+                }
+              });
             });
-          });
+          }
         },
         backgroundColor: AppColors.darkGrey,
-        child: fabIcon,
+        child: isAddButtonEnabled
+            ? fabIcon
+            : const Icon(Icons.disabled_by_default_sharp),
       ),
     );
   }
