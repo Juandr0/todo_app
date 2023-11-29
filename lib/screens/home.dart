@@ -76,34 +76,45 @@ class _HomeState extends State<Home> {
                 vertical: AppSizes.inline * 3,
               ),
               child: Column(
-                children: [
-                  Expanded(
-                    child: ListView.builder(
-                      itemCount: filteredTodos.length,
-                      itemBuilder: (context, index) {
-                        return Dismissible(
-                          key: Key(filteredTodos[index].documentId ?? ''),
-                          direction: DismissDirection.endToStart,
-                          background: Container(
-                            color: Colors.red,
-                            alignment: Alignment.centerRight,
-                            padding: const EdgeInsets.only(right: AppSizes.inline),
-                            child:
-                                const Icon(Icons.delete, color: Colors.white),
+                children: filteredTodos.isEmpty
+                    ? [
+                        const Center(
+                          child: Text(
+                            'Add something to do!',
+                            style: TextStyle(fontSize: AppSizes.between),
                           ),
-                          onDismissed: (direction) {
-                            _firebaseHandler.deleteTodo(filteredTodos[index]);
-                          },
-                          child: ToDoItem(
-                            todo: filteredTodos[index],
-                            onTodoChanged: (updatedTodo) =>
-                                handleTodoChange(updatedTodo, index),
+                        ),
+                      ]
+                    : [
+                        Expanded(
+                          child: ListView.builder(
+                            itemCount: filteredTodos.length,
+                            itemBuilder: (context, index) {
+                              return Dismissible(
+                                key: Key(filteredTodos[index].documentId ?? ''),
+                                direction: DismissDirection.endToStart,
+                                background: Container(
+                                  color: Colors.red,
+                                  alignment: Alignment.centerRight,
+                                  padding: const EdgeInsets.only(
+                                      right: AppSizes.inline),
+                                  child: const Icon(Icons.delete,
+                                      color: Colors.white),
+                                ),
+                                onDismissed: (direction) {
+                                  _firebaseHandler
+                                      .deleteTodo(filteredTodos[index]);
+                                },
+                                child: ToDoItem(
+                                  todo: filteredTodos[index],
+                                  onTodoChanged: (updatedTodo) =>
+                                      handleTodoChange(updatedTodo, index),
+                                ),
+                              );
+                            },
                           ),
-                        );
-                      },
-                    ),
-                  ),
-                ],
+                        ),
+                      ],
               ),
             );
           },
@@ -121,7 +132,7 @@ class _HomeState extends State<Home> {
           });
         },
         backgroundColor: AppColors.darkGrey,
-        child: const Icon(Icons.add),
+        child: const Icon(Icons.add, color: Colors.white),
       ),
     );
   }
@@ -195,6 +206,8 @@ class _HomeState extends State<Home> {
                 });
               },
               decoration: InputDecoration(
+                contentPadding: const EdgeInsets.symmetric(
+                    vertical: AppSizes.inlineText * 4),
                 prefixIcon: const Icon(Icons.search),
                 suffixIcon: IconButton(
                   icon: const Icon(Icons.clear),
