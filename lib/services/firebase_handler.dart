@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -9,6 +10,7 @@ class FirebaseHandler {
   final db = FirebaseFirestore.instance;
 
   final _todosController = StreamController<List<Todo>>.broadcast();
+
   Stream<List<Todo>> get todoStream => _todosController.stream;
 
   void deleteTodo(Todo todo) async {
@@ -43,14 +45,16 @@ class FirebaseHandler {
     }
   }
 
-  void signInAnonymously() async {
+  void signInAndSetup() async {
+    await signInAnonymously();
+    setupTodoListener();
+  }
+
+  Future signInAnonymously() async {
     try {
       await _auth.signInAnonymously();
     } on FirebaseAuthException catch (e) {
-      switch (e.code) {
-        default:
-          print("Error: $e");
-      }
+      log(e.code);
     }
   }
 

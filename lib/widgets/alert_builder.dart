@@ -1,9 +1,9 @@
-
 import 'package:flutter/material.dart';
 import 'package:todo_app/constants/app_colors.dart';
 import 'package:todo_app/constants/app_sizes.dart';
 import 'package:todo_app/models/to_do.dart';
-import 'package:todo_app/views/post_it_view.dart';
+import 'package:todo_app/screens/post_it_view.dart';
+
 import 'package:todo_app/widgets/checkmark.dart';
 
 class AlertBuilder {

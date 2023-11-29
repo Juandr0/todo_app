@@ -42,8 +42,10 @@ dependencies:
   firebase_auth: ^4.14.0
   firebase_core: ^2.22.0
   cloud_firestore: ^4.13.2
-
   adaptive_action_sheet: ^2.0.2
+  floating_bubbles: ^2.5.1
+  animated_background: ^2.0.0
+  google_fonts: ^6.1.0
 
 dev_dependencies:
   flutter_test:
@@ -67,9 +69,22 @@ flutter:
   # the material Icons class.
   uses-material-design: true
 
+
+
+
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/hyrox_race.png
+   - assets/hyrox_race.png
+   - assets/note-add.png
+   - assets/note-camera.png
+   - assets/note-list-start.png
+   - assets/note-list.png
+   - assets/themes/bluebubbles.png
+   - assets/themes/orangebubbles.png
+   - assets/themes/particles.png
+   - assets/themes/space.png
+   - assets/themes/mysman.png
+   - assets/themes/hearts.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

@@ -18,6 +18,29 @@ class AppColors {
   static const Color defaultPostitBackground = Color.fromARGB(255, 255, 255, 0);
   static const Color darkGrey = Color(0xFF3A3A3A);
   static const Color postItSecondary = Color.fromARGB(187, 190, 190, 190);
+  static const Color active = Colors.blue;
+  static const Color inactive = Colors.grey;
+
+  // animated bubbles themes
+  static const Color blueBubblesBackground = Color.fromARGB(255, 15, 94, 156);
+  static const Color orangeBubblesBackground = Color.fromRGBO(255, 193, 0, 1);
+
+  static const List<Color> blueBubbles = [
+    Color.fromARGB(255, 35, 137, 218),
+    Color.fromARGB(255, 28, 163, 236),
+    Color.fromARGB(255, 90, 188, 216),
+    Color.fromARGB(255, 116, 204, 244)
+  ];
+
+  static const List<Color> orangeBubbles = [
+    Color.fromRGBO(255, 193, 0, 1),
+    Color.fromRGBO(255, 154, 0, 1),
+    Color.fromRGBO(255, 116, 0, 1),
+    Color.fromRGBO(255, 77, 0, 1),
+    Color.fromRGBO(255, 0, 0, 1)
+  ];
+
+  // Palette colors section
 
   static const List<Color> paletteColors = [
     Color.fromARGB(255, 255, 90, 90),
