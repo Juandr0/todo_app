@@ -24,7 +24,7 @@ class FirebaseHandler {
 
   void saveTodo(Todo todo) async {
     String uid = _getUserId();
-
+    log('Userid: $uid');
     final data = {
       'title': todo.title,
       'description': todo.description,
