@@ -2,17 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:todo_app/constants/app_sizes.dart';
 import 'package:todo_app/constants/app_colors.dart';
 import 'package:todo_app/constants/strings.dart';
+import 'package:todo_app/screens/home.dart';
 import 'package:todo_app/shared_preferences.dart';
-import 'package:todo_app/models/image-data.dart';
+import 'package:todo_app/models/image_data.dart';
 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({super.key});
 
   @override
-  _WelcomeScreenState createState() => _WelcomeScreenState();
+  WelcomeScreenState createState() => WelcomeScreenState();
 }
 
-class _WelcomeScreenState extends State<WelcomeScreen> {
+class WelcomeScreenState extends State<WelcomeScreen> {
   final Color buttonColor = AppColors.darkGrey;
   final Color textColor = AppColors.darkGrey;
 
@@ -24,6 +25,22 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   ];
 
   int _selectedIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    checkFirstTime();
+  }
+
+  Future<void> checkFirstTime() async {
+    bool isFirstTime = await SharedPrefHelper.isFirstTime();
+    if (isFirstTime) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => Home()),
+      );
+    }
+  }
 
   Widget buildTitleSection() {
     return Expanded(
@@ -136,7 +153,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           ElevatedButton(
             onPressed: () async {
               await SharedPrefHelper.setFirstTime();
-              // Navigate to the Todo screen
+              checkFirstTime();
             },
             style: ButtonStyle(
               backgroundColor: MaterialStateProperty.all<Color>(buttonColor),
@@ -199,7 +216,8 @@ class ImageSliderIndicator extends StatelessWidget {
   final int selectedIndex;
   final int itemCount;
 
-  const ImageSliderIndicator({super.key, required this.selectedIndex, required this.itemCount});
+  const ImageSliderIndicator(
+      {super.key, required this.selectedIndex, required this.itemCount});
 
   @override
   Widget build(BuildContext context) {

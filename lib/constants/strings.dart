@@ -10,7 +10,7 @@ class Strings {
 
   static const String imageOnePath = 'assets/note-list-start.png';
   static const String imageOneText =
-      'This is where you store all of your todos. On the left there is a checkbox that controlls if a todo is done or not. You can press the item to edit it(see next slide).';
+      'This is where you store all of your todos. On the left there is a checkbox that controlls if a todo is done or not. Swipe the todo to the left to delete it. You can also press the item to edit it(see next slide).';
 
   static const String imageTwoPath = 'assets/note-add.png';
   static const String imageTwoText =

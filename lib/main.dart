@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/screens/home.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:todo_app/screens/welcome_screen.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       title: 'Todo App',
-      home: Home(),
+      home: WelcomeScreen(),
     );
   }
 }
