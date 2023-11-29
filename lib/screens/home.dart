@@ -70,42 +70,51 @@ class _HomeState extends State<Home> {
                       searchController.text.toLowerCase(),
                     ))
                 .toList();
-
             return Container(
               padding: const EdgeInsets.symmetric(
                 horizontal: AppSizes.inline * 3,
                 vertical: AppSizes.inline * 3,
               ),
               child: Column(
-                children: [
-                  Expanded(
-                    child: ListView.builder(
-                      itemCount: filteredTodos.length,
-                      itemBuilder: (context, index) {
-                        return Dismissible(
-                          key: Key(filteredTodos[index].documentId ?? ''),
-                          direction: DismissDirection.endToStart,
-                          background: Container(
-                            color: Colors.red,
-                            alignment: Alignment.centerRight,
-                            padding:
-                                const EdgeInsets.only(right: AppSizes.inline),
-                            child:
-                                const Icon(Icons.delete, color: Colors.white),
+                children: filteredTodos.isEmpty
+                    ? [
+                        const Center(
+                          child: Text(
+                            'Add something to do!',
+                            style: TextStyle(fontSize: AppSizes.between),
                           ),
-                          onDismissed: (direction) {
-                            _firebaseHandler.deleteTodo(filteredTodos[index]);
-                          },
-                          child: ToDoItem(
-                            todo: filteredTodos[index],
-                            onTodoChanged: (updatedTodo) =>
-                                handleTodoChange(updatedTodo, index),
+                        )
+                      ]
+                    : [
+                        Expanded(
+                          child: ListView.builder(
+                            itemCount: filteredTodos.length,
+                            itemBuilder: (context, index) {
+                              return Dismissible(
+                                key: Key(filteredTodos[index].documentId ?? ''),
+                                direction: DismissDirection.endToStart,
+                                background: Container(
+                                  color: Colors.red,
+                                  alignment: Alignment.centerRight,
+                                  padding: const EdgeInsets.only(
+                                      right: AppSizes.inline),
+                                  child: const Icon(Icons.delete,
+                                      color: Colors.white),
+                                ),
+                                onDismissed: (direction) {
+                                  _firebaseHandler
+                                      .deleteTodo(filteredTodos[index]);
+                                },
+                                child: ToDoItem(
+                                  todo: filteredTodos[index],
+                                  onTodoChanged: (updatedTodo) =>
+                                      handleTodoChange(updatedTodo, index),
+                                ),
+                              );
+                            },
                           ),
-                        );
-                      },
-                    ),
-                  ),
-                ],
+                        ),
+                      ],
               ),
             );
           },
