@@ -3,7 +3,7 @@ import 'package:todo_app/constants/app_sizes.dart';
 import 'package:todo_app/constants/app_colors.dart';
 import 'package:todo_app/constants/strings.dart';
 import 'package:todo_app/shared_preferences.dart';
-import 'package:todo_app/models/image-data.dart';
+import 'package:todo_app/models/image_data.dart';
 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({super.key});

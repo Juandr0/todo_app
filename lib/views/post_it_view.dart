@@ -1,3 +1,6 @@
+import 'dart:developer';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:todo_app/constants/app_sizes.dart';
 import 'package:todo_app/models/to_do.dart';
@@ -75,7 +78,7 @@ class _PostItViewState extends State<PostItView> {
   Stack _imageStack() {
     return Stack(
       children: [
-        _scalableImage(widget.todoItem.image!),
+        _scalableImage(widget.todoItem.image),
         Align(
           alignment: Alignment.topRight,
           child: IconButton(
@@ -96,11 +99,11 @@ class _PostItViewState extends State<PostItView> {
     );
   }
 
-  SizedBox _scalableImage(Image? image) {
-    return SizedBox(
-      child: image ?? const SizedBox.shrink(),
-    );
-  }
+  SizedBox _scalableImage(File? image) {
+  return SizedBox(
+    child: image != null ? Image.file(image) : const SizedBox.shrink(),
+  );
+}
 
   DottedBorder _iconButton() {
     return DottedBorder(
@@ -111,7 +114,8 @@ class _PostItViewState extends State<PostItView> {
             final selectedImage = await ImageActionSheet.show(context);
             if (selectedImage != null) {
               setState(() {
-                widget.todoItem.image = Image.file(selectedImage);
+                widget.todoItem.image = selectedImage;
+                log('${widget.todoItem.image}');
               });
             }
           },

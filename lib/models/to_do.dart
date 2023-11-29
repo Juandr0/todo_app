@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:todo_app/constants/app_colors.dart';
 
@@ -7,6 +9,7 @@ class Todo {
     this.documentId,
     this.description,
     this.image,
+    this.imageUrl,
     this.done = false,
     this.backgroundColor = AppColors.defaultPostitBackground,
   });
@@ -14,7 +17,8 @@ class Todo {
   String? documentId;
   String title;
   String? description;
-  Image? image;
+  File? image;
+  String? imageUrl;
   bool done = false;
   Color backgroundColor;
 
