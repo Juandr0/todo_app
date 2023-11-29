@@ -25,7 +25,7 @@ class ThemeHandler extends StatelessWidget {
         return Bubbles(bubbles: BubblesModel.blueBubbles, key: UniqueKey());
 
       case BackgroundTheme.mysman:
-        return Mysman();
+        return const Mysman();
       case BackgroundTheme.orangeBubbles:
         return Bubbles(bubbles: BubblesModel.orangeBubbles, key: UniqueKey());
 

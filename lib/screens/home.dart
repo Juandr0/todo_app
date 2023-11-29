@@ -23,6 +23,7 @@ class _HomeState extends State<Home> {
   final TextEditingController searchController = TextEditingController();
   final _firebaseHandler = FirebaseHandler();
   int popMenuIndex = 4;
+  Icon fabIcon = const Icon(Icons.add);
 
   @override
   void initState() {
@@ -122,7 +123,7 @@ class _HomeState extends State<Home> {
           });
         },
         backgroundColor: AppColors.darkGrey,
-        child: const Icon(Icons.add),
+        child: fabIcon,
       ),
     );
   }
@@ -251,6 +252,11 @@ class _HomeState extends State<Home> {
           activeTheme = BackgroundTheme.disabled;
           popMenuIndex = 5;
           break;
+      }
+      if (value == 1) {
+        setState(() => fabIcon = const Icon(Icons.favorite));
+      } else {
+        setState(() => fabIcon = const Icon(Icons.add));
       }
       SharedPrefHelper.setThemeIndex(popMenuIndex);
     });
