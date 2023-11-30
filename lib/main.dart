@@ -19,6 +19,7 @@ class MyApp extends StatelessWidget {
     return const MaterialApp(
       title: 'Todo App',
       home: WelcomeScreen(),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
