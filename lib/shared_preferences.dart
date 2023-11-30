@@ -19,7 +19,7 @@ class SharedPrefHelper {
 
   static Future<int> getThemeIndex() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    int index = prefs.getInt('themeIndex') ?? 4;
+    int index = prefs.getInt('themeIndex') ?? 5;
     return index;
   }
 }
