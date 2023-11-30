@@ -1,13 +1,10 @@
 import 'dart:developer';
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:todo_app/constants/app_sizes.dart';
 import 'package:todo_app/models/to_do.dart';
 import 'package:todo_app/widgets/color_picker.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:todo_app/widgets/image_action_sheet.dart';
-import 'package:todo_app/widgets/todo_item.dart';
 
 enum InputType { title, description }
 
@@ -90,6 +87,7 @@ class _PostItViewState extends State<PostItView> {
             onPressed: () {
               setState(() {
                 widget.todoItem.image = null;
+                widget.todoItem.imageUrl = null;
               });
             },
             padding: EdgeInsets.zero,
@@ -102,35 +100,6 @@ class _PostItViewState extends State<PostItView> {
       ],
     );
   }
-
-  // Stack _imageStack() {
-  //   return Stack(
-  //     children: [
-  //       _scalableImage(widget.todoItem.imageUrl
-  //           // widget.todoItem.image != null ?
-  //           // Image.network(
-  //           //   widget.todoItem.imageUrl
-  //           // ): null,
-  //           ),
-  //       Align(
-  //         alignment: Alignment.topRight,
-  //         child: IconButton(
-  //           alignment: Alignment.topRight,
-  //           onPressed: () {
-  //             setState(() {
-  //               widget.todoItem.image = null;
-  //             });
-  //           },
-  //           padding: EdgeInsets.zero,
-  //           icon: const Icon(
-  //             Icons.cancel_outlined,
-  //             color: Colors.red,
-  //           ),
-  //         ),
-  //       ),
-  //     ],
-  //   );
-  // }
 
   SizedBox _scalableImage() {
     return SizedBox(
@@ -147,17 +116,6 @@ class _PostItViewState extends State<PostItView> {
               : const SizedBox.shrink(),
     );
   }
-
-// SizedBox _scalableImage(File? imageFile) {
-//   return SizedBox(
-//     child: imageFile != null
-//         ? Image.file(
-//             imageFile,
-//             fit: BoxFit.cover,
-//           )
-//         : const SizedBox.shrink(),
-//   );
-// }
 
   DottedBorder _iconButton() {
     return DottedBorder(

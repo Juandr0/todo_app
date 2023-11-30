@@ -44,22 +44,19 @@ class FirebaseHandler {
 
   void saveTodo(Todo todo) async {
     String uid = _getUserId();
-    log('In saveTodo: $uid');
+    log('uid: $uid');
 
     if (todo.image != null && todo.image is File) {
       try {
         String imageUrl = await uploadImage(todo.image as File);
         todo.imageUrl = imageUrl;
 
-        log('imageUrl: ${todo.imageUrl}');
-        //log(todo.image!.path);
         final data = {
           'title': todo.title,
           'description': todo.description,
           'done': todo.done,
           'backgroundColor': todo.backgroundColor.value,
           'imageurl': todo.imageUrl,
-          //'image': todo.image?.path,
         };
 
         log('in try!!!!!');
@@ -85,6 +82,7 @@ class FirebaseHandler {
   }
 
   void signInAndSetup() async {
+    log('SignInAndSetup!!!!!');
     await signInAnonymously();
     setupTodoListener();
   }
@@ -99,8 +97,7 @@ class FirebaseHandler {
 
   void setupTodoListener() async {
     final uId = _getUserId();
-    log('uId in Setup: $uId');
-    print(_getUserId());
+    log('setuTodoListener: $uId');
 
     try {
       db
