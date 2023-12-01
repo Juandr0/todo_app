@@ -22,7 +22,7 @@ class _HomeState extends State<Home> {
   BackgroundTheme activeTheme = BackgroundTheme.disabled;
   final TextEditingController searchController = TextEditingController();
   final _firebaseHandler = FirebaseHandler();
-  int popMenuIndex = 4;
+  int popMenuIndex = 5;
   Icon fabIcon = const Icon(Icons.add);
 
   @override
