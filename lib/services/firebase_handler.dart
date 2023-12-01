@@ -59,7 +59,6 @@ class FirebaseHandler {
           'imageurl': todo.imageUrl,
         };
 
-        log('in try!!!!!');
         if (todo.documentId != null) {
           db
               .collection('users')
@@ -67,22 +66,16 @@ class FirebaseHandler {
               .collection('todos')
               .doc(todo.documentId)
               .update(data);
-          log('Updated !!!!!! $uid');
         } else {
           db.collection('users').doc(uid).collection('todos').add(data);
-          log('Added Data to Firebase!!!!!! ${todo.documentId}');
         }
       } catch (e, _) {
-        print('''!!!!!!!!!!!!!!!!!!!
-            $e
-                    !!!!!!!!!!!!!!!!!!!!!!!!!!
-          ''');
+        print(e);
       }
     }
   }
 
   void signInAndSetup() async {
-    log('SignInAndSetup!!!!!');
     await signInAnonymously();
     setupTodoListener();
   }
@@ -97,7 +90,6 @@ class FirebaseHandler {
 
   void setupTodoListener() async {
     final uId = _getUserId();
-    log('setuTodoListener: $uId');
 
     try {
       db
@@ -119,7 +111,6 @@ class FirebaseHandler {
         }).toList();
 
         _todosController.add(todos);
-        log('Snapshotlistener!!!!! ');
       });
     } catch (e, stackTrace) {
       log('Error in setupTodoListener: $e');

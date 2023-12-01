@@ -38,7 +38,7 @@ class _PostItViewState extends State<PostItView> {
       const SizedBox(height: AppSizes.within),
       widget.todoItem.image == null && widget.todoItem.imageUrl == null
           ? _iconButton()
-          : _stackImage(),
+          : _imageStack(),
     ];
     return Column(
       children: [
@@ -76,7 +76,7 @@ class _PostItViewState extends State<PostItView> {
     });
   }
 
-  _stackImage() {
+  _imageStack() {
     return Stack(
       children: [
         _scalableImage(),
