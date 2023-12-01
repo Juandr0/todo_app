@@ -42,38 +42,39 @@ class FirebaseHandler {
         .delete();
   }
 
-  void saveTodo(Todo todo) async {
-    String uid = _getUserId();
-    log('uid: $uid');
+void saveTodo(Todo todo) async {
+  String uid = _getUserId();
+  log('uid: $uid');
 
+  try {
     if (todo.image != null && todo.image is File) {
-      try {
-        String imageUrl = await uploadImage(todo.image as File);
-        todo.imageUrl = imageUrl;
-
-        final data = {
-          'title': todo.title,
-          'description': todo.description,
-          'done': todo.done,
-          'backgroundColor': todo.backgroundColor.value,
-          'imageurl': todo.imageUrl,
-        };
-
-        if (todo.documentId != null) {
-          db
-              .collection('users')
-              .doc(uid)
-              .collection('todos')
-              .doc(todo.documentId)
-              .update(data);
-        } else {
-          db.collection('users').doc(uid).collection('todos').add(data);
-        }
-      } catch (e, _) {
-        print(e);
-      }
+      String imageUrl = await uploadImage(todo.image as File);
+      todo.imageUrl = imageUrl;
     }
+
+    final data = {
+      'title': todo.title,
+      'description': todo.description,
+      'done': todo.done,
+      'backgroundColor': todo.backgroundColor.value,
+      if (todo.imageUrl != null) 'imageurl': todo.imageUrl,
+    };
+
+    if (todo.documentId != null) {
+      db
+          .collection('users')
+          .doc(uid)
+          .collection('todos')
+          .doc(todo.documentId)
+          .update(data);
+    } else {
+      db.collection('users').doc(uid).collection('todos').add(data);
+    }
+  } catch (e, _) {
+    print(e);
   }
+}
+
 
   void signInAndSetup() async {
     await signInAnonymously();
